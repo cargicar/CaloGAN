@@ -32,7 +32,8 @@
 #define SteppingAction_h 1
 
 #include "G4UserSteppingAction.hh"
-#include "g4root.hh"
+//#include "G4root.hh"
+#include "G4AnalysisManager.hh"
 
 class DetectorConstruction;
 
