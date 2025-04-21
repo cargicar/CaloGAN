@@ -1,4 +1,5 @@
-from ROOT import *
+#from ROOT import *
+from ROOT import TFile, TCanvas, TH1F, TH2F
 import numpy as np
 
 nbins1x = 3;
@@ -48,7 +49,7 @@ def get_x(myindex,ybin,zbin):
         return (myindex - lvl1 - lvl2 - ybin)/nbins3y
     pass
 
-myfile = TFile("plz_work_kthxbai.root")
+myfile = TFile("plz_work_kthxbai_t0.root")
 mytree = myfile.Get("fancy_tree")
 
 c = TCanvas("a","a",500,500)
@@ -59,7 +60,7 @@ sampling3_eta_tot = TH2F("","",480/40,-240.,240.,480/80,-240.,240.)
 for i in range(mytree.GetEntries()):
     mytree.GetEntry(i)
     if (i%100==0):
-        print i,mytree.GetEntries()
+        print (f"i: {i} , mytree {mytree.GetEntries()}")
         pass
     zsegmentation = TH1F("","",3,np.array([-240.,-150.,197.,240.]))
     sampling1_eta = TH2F("","",3,-240.,240.,480/5,-240.,240.)
