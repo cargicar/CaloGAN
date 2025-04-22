@@ -34,6 +34,7 @@
 
 #include "G4Step.hh"
 #include "G4RunManager.hh"
+//#include <sstream>
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -72,9 +73,11 @@ int SteppingAction::WhichXYbin(double xpos, double ypos, int zbin){
   int nbins3y = 6;
   int nbinsx[]={nbins1x,nbins2x,nbins3x};
   int nbinsy[]={nbins1y,nbins2y,nbins3y};
+
   for (int i=1; i<=nbinsx[zbin]; i++){
     if ((xpos < -240 + i*480/nbinsx[zbin]) && (xpos > -240)){
       xbin = i - 1;
+      //G4cout << "###### XBIN ###########" << xbin << G4endl; 
       break;
     }
   }
