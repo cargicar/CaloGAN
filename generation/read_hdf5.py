@@ -58,13 +58,13 @@ if __name__ == '__main__':
     if layer_data:
         for layer_name, data in layer_data.items():
             print(f"\n--- {layer_name} ---")
-            print(f"First 5 entries:\n{data[:5]}")
-            print(f"Data type: {data.dtype}")
+            #print(f"First 5 entries:\n{data[:5]}")
+            print(f"Data shape: {data.shape}")
 
         print(f"\n--- Overflow Data ---")
-        print(f"First 5 entries:\n{overflow_data[:5]}")
-        print(f"Data type: {overflow_data.dtype}")
+        #print(f"First 5 entries:\n{overflow_data[:100]}")
+        print(f"Data shape: {overflow_data.shape}")
 
         print(f"\n--- Energy Data ---")
-        print(f"First 5 entries:\n{energy_data[:5]}")
-        print(f"Data type: {energy_data.dtype}")
+        #print(f"First 5 entries:\n{energy_data[:5]}")
+        print(f"Data shape: {energy_data.shape}")

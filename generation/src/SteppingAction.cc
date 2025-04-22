@@ -34,6 +34,7 @@
 
 #include "G4Step.hh"
 #include "G4RunManager.hh"
+//#include <sstream>
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -72,9 +73,11 @@ int SteppingAction::WhichXYbin(double xpos, double ypos, int zbin){
   int nbins3y = 6;
   int nbinsx[]={nbins1x,nbins2x,nbins3x};
   int nbinsy[]={nbins1y,nbins2y,nbins3y};
+  // Given (xpos, ypos, zbin), give corresponding 2D bin in zbin (xbin, ybin) 
   for (int i=1; i<=nbinsx[zbin]; i++){
     if ((xpos < -240 + i*480/nbinsx[zbin]) && (xpos > -240)){
       xbin = i - 1;
+      //G4cout << "###### XBIN ###########" << xbin << G4endl; 
       break;
     }
   }
@@ -92,11 +95,11 @@ int SteppingAction::WhichXYbin(double xpos, double ypos, int zbin){
 
 
 
-  if ((xbin == -1) || (ybin == -1)) {
+  if ((xbin == -1) || (ybin == -1)) { // Outside the bins?
     return lvl1 + lvl2 + lvl3 + zbin;
   }
 
-  if (zbin == 0) {
+  if (zbin == 0) { 
     return xbin * nbins1y + ybin;
   } 
   else if (zbin == 1) {
@@ -136,12 +139,12 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
   G4ThreeVector pos1 = point1->GetPosition();
   G4ThreeVector pos2 = point2->GetPosition();
 
-  //G4cout << "sqr " << pos1.z() << " " << pos2.z() << " " << pos1.x() << " " << pos2.x() << " " << edep << " " << step->GetTrack()->GetDefinition()->GetParticleName() << " " << step->GetTrack()->GetKineticEnergy() << G4endl;
+  //G4cout <<  "sqr " << pos1.z() << " " << pos2.z() << " " << pos1.x() << " " << pos2.x() << " " << edep << " " << step->GetTrack()->GetDefinition()->GetParticleName() << " " << step->GetTrack()->GetKineticEnergy() << G4endl;
       
   //G4cout << "sqr " << pos1.x() << " " << pos1.y() << " " << pos1.z() << " " << edep << G4endl;
   int mybin = WhichXYbin(pos1.x(),pos1.y(),WhichZBin(pos1.z()));
   // int mybin = 0;
-  //G4cout << "zbin " << WhichZBin(pos1.z()) << " " << mybin << " " << mybin%100 << std::endl;
+  //G4cout << "zbin " << WhichZBin(pos1.z()) << " which bin " << mybin << " " << mybin%100 << std::endl;
   
   RunData* runData = static_cast<RunData*>
     (G4RunManager::GetRunManager()->GetNonConstCurrentRun());

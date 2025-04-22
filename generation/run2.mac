@@ -3,7 +3,7 @@
 # To be run preferably in batch, without graphics:
 # % example[a,b,c,d] run2.mac
 #
-# /run/numberOfWorkers 4
+/run/numberOfWorkers 4
 /run/initialize
 #
 # Default kinemtics: 
@@ -17,7 +17,7 @@
 #/gun/particle pi+
 #/gun/particle gamma
 #/gun/energy 10 GeV
-#/run/beamOn 10
+#/run/beamOn 1000
 
 #see https://geant4.web.cern.ch/geant4/UserDocumentation/UsersGuides/ForApplicationDeveloper/html/ch02s07.html for details.
 #/gps/List #lists the particles you can shoot with G4
@@ -31,4 +31,4 @@
 /gps/ene/gradient 0. #uniform
 /gps/ene/intercept 1	
 /gps/number 1 
-/run/beamOn 10
+/run/beamOn 1000
