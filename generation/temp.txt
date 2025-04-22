@@ -1,0 +1,7 @@
+link solving Qt5 path not found error at cmake time
+https://askubuntu.com/questions/374755/what-package-do-i-need-to-build-a-qt-5-cmake-application
+
+the add the evn variable  ccmake -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake/Qt5Core/ -B build
+
+run docker:
+docker run -it -v $(pwd)/generation:/generation jeffersonlab/geant4:g4v10.7.4-ubuntu24 /bin/bash

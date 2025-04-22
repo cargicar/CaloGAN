@@ -33,7 +33,7 @@ The challenges come from the fact that this portion of the detector is longitudi
 
 To download and better understand the training dataset, visit the [Mendeley Data repository](https://data.mendeley.com/datasets/pvn3xc3wy5/1).
 
-![3D shower in the EM calorimeter](/figures/3d.jpg)
+![3D shower in the EM calorimeter](figures/3d.jpg)
 
 ## Getting Started
 

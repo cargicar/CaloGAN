@@ -34,7 +34,6 @@
 
 #include "G4Step.hh"
 #include "G4RunManager.hh"
-//#include <sstream>
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

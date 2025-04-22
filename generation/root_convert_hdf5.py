@@ -42,7 +42,7 @@ def root_to_hdf5(input_root_file, output_hdf5_file, tree_name=None):
 #### converting following original convert.py. I needed to rewrite this file cause rootpy.io
 ##### wasn't working for me, so i needed to use uproot instead
 
-
+### run as python convert.py --in-file plz_work_kthxbai.root --out-file test.h5 --tree fancy_tree
 LAYER_SPECS = [(3, 96), (12, 12), (12, 6)]
 LAYER_DIV = np.cumsum(list(map(np.prod, LAYER_SPECS))).tolist()
 LAYER_DIV = list(zip([0] + LAYER_DIV, LAYER_DIV))
