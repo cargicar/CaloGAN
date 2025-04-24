@@ -1,0 +1,33 @@
+# Macro file to visualize geometry using the RayTracer driver
+
+# Open the RayTracer driver
+/vis/open RayTracer
+
+# Draw the detector geometry
+/vis/drawVolume
+
+# Set the viewpoint (optional)
+/vis/viewer/set/viewpointThetaPhi 60 30
+
+# Set the zoom factor (optional)
+/vis/viewer/zoom 1.5
+
+# Set the style (optional: wireframe or surface)
+/vis/viewer/set/style surface
+
+# Set the background color (optional: r g b)
+/vis/viewer/set/background 0.8 0.8 0.9 # Light blue
+
+# Add coordinate axes (optional)
+/vis/scene/add/axes 10 cm  # Length of axes
+
+# For complex geometries, you might want to control visibility
+# of specific volumes (optional)
+# /vis/geometry/set/visibility <logicalVolumeName> true
+# /vis/geometry/set/colour <logicalVolumeName> <r> <g> <b>
+
+# Flush the viewer to ensure everything is drawn
+/vis/viewer/flush
+
+# Close the driver (optional, but good practice)
+/vis/close

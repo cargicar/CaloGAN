@@ -75,7 +75,7 @@ all_data = uproot.concatenate(
     library="np"  # Or "pd" for Pandas DataFrame, "ak" for Awkward Array
 )
 
-save_concatenated_root("calogan_concat_nparticles_1000.root", all_data, tree_name="fancy_tree")
+save_concatenated_root("/global/u2/c/ccardona/datasets_G4generated/calogan_concat_nparticles_piplus_1000.root", all_data, tree_name="fancy_tree")
 
 # Access your data like:
 # if library="np":
