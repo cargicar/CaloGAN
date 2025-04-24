@@ -4,4 +4,5 @@
 #SBATCH --qos=regular
 #SBATCH --constraint=cpu
 #SBATCH --account=m3246
-srun -n 128 shifter ./build/generate -m run2.mac
+#SBATCH --time=00:30:00 
+srun -n 32 shifter --env-file=/global/homes/c/ccardona/CaloGAN/datasets.env ./build/generate -m run2.mac
