@@ -1,6 +1,6 @@
 
 **************************************************************
- Geant4 version Name: geant4-11-03 [MT]   (6-December-2024)
+ Geant4 version Name: geant4-11-00-patch-03 [MT]   (16-September-2022)
   << in Multi-threaded mode >> 
                        Copyright : Geant4 Collaboration
                       References : NIM A 506 (2003), 250-303
@@ -24,27 +24,16 @@ Registered graphics systems are:
   RayTracer (RayTracer)
   VRML2FILE (VRML2FILE)
   gMocrenFile (gMocrenFile)
-  TOOLSSG_OFFSCREEN (TSG_OFFSCREEN, TSG_FILE)
   OpenGLImmediateQt (OGLIQt, OGLI)
   OpenGLStoredQt (OGLSQt, OGL, OGLS)
-  OpenGLImmediateX (OGLIX, OGLIQt_FALLBACK)
-  OpenGLStoredX (OGLSX, OGLSQt_FALLBACK)
+  OpenGLImmediateXm (OGLIXm, OGLIQt_FALLBACK)
+  OpenGLStoredXm (OGLSXm, OGLSQt_FALLBACK)
+  OpenGLImmediateX (OGLIX, OGLIQt_FALLBACK, OGLIXm_FALLBACK)
+  OpenGLStoredX (OGLSX, OGLSQt_FALLBACK, OGLSXm_FALLBACK)
   RayTracerX (RayTracerX)
-  Qt3D (Qt3D)
-  TOOLSSG_X11_GLES (TSG_X11_GLES, TSGX11, TSG_QT_GLES_FALLBACK)
-  TOOLSSG_X11_ZB (TSG_X11_ZB, TSGX11ZB)
-  TOOLSSG_QT_GLES (TSG_QT_GLES, TSGQt, TSG)
-  TOOLSSG_QT_ZB (TSG_QT_ZB, TSGQtZB)
-You may choose a graphics system (driver) with a parameter of
-the command "/vis/open" or "/vis/sceneHandler/create",
-or you may omit the driver parameter and choose at run time:
-- by argument in the construction of G4VisExecutive;
-- by environment variable "G4VIS_DEFAULT_DRIVER";
-- by entry in "~/.g4session";
-- by build flags.
-- Note: This feature is not allowed in batch mode.
-For further information see "examples/basic/B1/exampleB1.cc"
-and "vis.mac".
+  TOOLSSG_QT_GLES (TSG_QT_GLES, TSG)
+  VtkNative (VTKN, VTK_NATIVE)
+  VtkQt (VTKQt, Vtk, VTK)
 
 Registering model factories...
 
@@ -101,7 +90,7 @@ Some /vis commands (optionally) take a string to specify colour.
           ElmMassFraction: 100.00 %  ElmAbundance 100.00 % 
 
 
- Material: Galactic    density:  0.000 mg/cm3  RadL: 204310098.490 pc   Nucl.Int.Length: 3240.779 pc 
+ Material: Galactic    density:  0.000 mg/cm3  RadL: 204310098.490 pc   Nucl.Int.Length: 113427284.261 pc 
                        Imean:  19.200 eV   temperature:   2.73 K  pressure:   0.00 atm
 
    --->  Element: H (H)   Z =  1.0   N =     1   A =  1.008 g/mole
@@ -132,10 +121,8 @@ Checking overlaps for volume Gap:0 (G4Box) ... OK!
 LPM effect enabled                                 1
 Enable creation and use of sampling tables         0
 Apply cuts on all EM processes                     0
-Use combined TransportationWithMsc                 Disabled
-Use general process                                1
+Use general process                                0
 Enable linear polarisation for gamma               0
-Enable photoeffect sampling below K-shell          1
 Enable sampling of quantum entanglement            0
 X-section factor for integral approach             0.8
 Min kinetic energy for tables                      100 eV 
@@ -147,14 +134,11 @@ Bremsstrahlung energy threshold above which
   primary e+- is added to the list of secondary    100 TeV
 Bremsstrahlung energy threshold above which primary
   muon/hadron is added to the list of secondary    100 TeV
-Positron annihilation at rest model                SimplePositronium
-Enable 3 gamma annihilation on fly                 0
 Lowest triplet kinetic energy                      1 MeV
 Enable sampling of gamma linear polarisation       0
 5D gamma conversion model type                     0
 5D gamma conversion model on isolated ion          0
-Use Ricardo-Gerardo pair production model          0
-Livermore data directory                           epics_2017
+Livermore data directory                           livermore
 =======================================================================
 ======                 Ionisation Parameters                   ========
 =======================================================================
@@ -164,9 +148,8 @@ Step function for light ions                       (0.2, 0.1 mm)
 Step function for general ions                     (0.2, 0.1 mm)
 Lowest e+e- kinetic energy                         1 keV
 Lowest muon/hadron kinetic energy                  1 keV
-Use ICRU90 data                                    0
 Fluctuations of dE/dx are enabled                  1
-Type of fluctuation model for leptons and hadrons  Urban
+Use ICRU90 data                                    0
 Use built-in Birks satuaration                     0
 Build CSDA range enabled                           0
 Use cut as a final range enabled                   0
@@ -217,8 +200,8 @@ conv:  for gamma SubType=14 BuildTable=1
      BetheHeitlerLPM : Emin=    0 eV  Emax=  100 TeV  ModifiedTsai
 
 Rayl:  for gamma SubType=11 BuildTable=1
-      Lambda table from 100 eV  to 150 keV, 7 bins/decade, spline: 0
-      LambdaPrime table from 150 keV to 100 TeV in 62 bins 
+      Lambda table from 100 eV  to 100 keV, 7 bins/decade, spline: 0
+      LambdaPrime table from 100 keV to 100 TeV in 63 bins 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
    LivermoreRayleigh : Emin=    0 eV  Emax=  100 TeV  CullenGenerator
 
@@ -229,10 +212,10 @@ msc:  for e-  SubType= 10
         WentzelVIUni : Emin=  100 MeV Emax=  100 TeV Nbins=42 100 MeV - 100 TeV
           StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
 
-eIoni:  for e-  XStype:3  SubType=2
+eIoni:  for e-  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
         MollerBhabha : Emin=    0 eV  Emax=  100 TeV
 
@@ -246,7 +229,7 @@ eBrem:  for e-  XStype:4  SubType=3
 
 CoulombScat:  for e- XStype:1 SubType=1 BuildTable=1
       Lambda table from 100 MeV to 100 TeV, 7 bins/decade, spline: 0
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=  100 MeV Emax=  100 TeV
 
@@ -257,10 +240,10 @@ msc:  for e+  SubType= 10
         WentzelVIUni : Emin=  100 MeV Emax=  100 TeV Nbins=42 100 MeV - 100 TeV
           StepLim=UseSafety Rfact=0.04 Gfact=2.5 Sfact=0.6 DispFlag:1 Skin=1 Llim=1 mm
 
-eIoni:  for e+  XStype:3  SubType=2
+eIoni:  for e+  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
         MollerBhabha : Emin=    0 eV  Emax=  100 TeV
 
@@ -272,13 +255,13 @@ eBrem:  for e+  XStype:4  SubType=3
              eBremSB : Emin=    0 eV  Emax=    1 GeV  ModifiedTsai
             eBremLPM : Emin=    1 GeV Emax=  100 TeV  ModifiedTsai
 
-annihil:  for e+ XStype:2 SubType=5 AtRestModel:Simple BuildTable=0
+annihil:  for e+ XStype:2 SubType=5 BuildTable=0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
             eplus2gg : Emin=    0 eV  Emax=  100 TeV
 
 CoulombScat:  for e+ XStype:1 SubType=1 BuildTable=1
       Lambda table from 100 MeV to 100 TeV, 7 bins/decade, spline: 0
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=  100 MeV Emax=  100 TeV
 
@@ -287,30 +270,30 @@ msc:  for proton  SubType= 10
         WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-hIoni:  for proton  XStype:3  SubType=2
+hIoni:  for proton  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                Bragg : Emin=    0 eV  Emax=    2 MeV
           BetheBloch : Emin=    2 MeV Emax=  100 TeV
 
 hBrems:  for proton  XStype:1  SubType=3
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 hPairProd:  for proton  XStype:1  SubType=4
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       Sampling table 17x1001; from 7.50618 GeV to 100 TeV 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
            hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 CoulombScat:  for proton XStype:1 SubType=1 BuildTable=1
       Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
 
@@ -319,12 +302,13 @@ msc:  for GenericIon  SubType= 10
             UrbanMsc : Emin=    0 eV  Emax=  100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-ionIoni:  for GenericIon  XStype:3  SubType=2
+ionIoni:  for GenericIon  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.02
+      Stopping Power data for 17 ion/material pairs
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
-               Bragg : Emin=    0 eV  Emax=    2 MeV
+            BraggIon : Emin=    0 eV  Emax=    2 MeV
           BetheBloch : Emin=    2 MeV Emax=  100 TeV
 
 msc:  for alpha  SubType= 10
@@ -332,10 +316,10 @@ msc:  for alpha  SubType= 10
             UrbanMsc : Emin=    0 eV  Emax=  100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-ionIoni:  for alpha  XStype:3  SubType=2
+ionIoni:  for alpha  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.02
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.02
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
             BraggIon : Emin=    0 eV  Emax=7.9452 MeV
           BetheBloch : Emin=7.9452 MeV Emax=  100 TeV
@@ -345,30 +329,30 @@ msc:  for anti_proton  SubType= 10
         WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-hIoni:  for anti_proton  XStype:3  SubType=2
+hIoni:  for anti_proton  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
             ICRU73QO : Emin=    0 eV  Emax=    2 MeV
           BetheBloch : Emin=    2 MeV Emax=  100 TeV
 
 hBrems:  for anti_proton  XStype:1  SubType=3
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 hPairProd:  for anti_proton  XStype:1  SubType=4
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       Sampling table 17x1001; from 7.50618 GeV to 100 TeV 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
            hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 CoulombScat:  for anti_proton XStype:1 SubType=1 BuildTable=1
       Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
 
@@ -377,30 +361,30 @@ msc:  for kaon+  SubType= 10
         WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-hIoni:  for kaon+  XStype:3  SubType=2
+hIoni:  for kaon+  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                Bragg : Emin=    0 eV  Emax=1.05231 MeV
           BetheBloch : Emin=1.05231 MeV Emax=  100 TeV
 
 hBrems:  for kaon+  XStype:1  SubType=3
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 hPairProd:  for kaon+  XStype:1  SubType=4
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       Sampling table 18x1001; from 3.94942 GeV to 100 TeV 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
            hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 CoulombScat:  for kaon+ XStype:1 SubType=1 BuildTable=1
       Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
 
@@ -409,30 +393,30 @@ msc:  for kaon-  SubType= 10
         WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-hIoni:  for kaon-  XStype:3  SubType=2
+hIoni:  for kaon-  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
             ICRU73QO : Emin=    0 eV  Emax=1.05231 MeV
           BetheBloch : Emin=1.05231 MeV Emax=  100 TeV
 
 hBrems:  for kaon-  XStype:1  SubType=3
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 hPairProd:  for kaon-  XStype:1  SubType=4
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       Sampling table 18x1001; from 3.94942 GeV to 100 TeV 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
            hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 CoulombScat:  for kaon- XStype:1 SubType=1 BuildTable=1
       Used Lambda table of kaon+
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
 
@@ -441,30 +425,31 @@ msc:  for mu+  SubType= 10
         WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-muIoni:  for mu+  XStype:3  SubType=2
+muIoni:  for mu+  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                Bragg : Emin=    0 eV  Emax=  200 keV
-        MuBetheBloch : Emin=  200 keV Emax=  100 TeV
+          BetheBloch : Emin=  200 keV Emax=    1 GeV
+        MuBetheBloch : Emin=    1 GeV Emax=  100 TeV
 
 muBrems:  for mu+  XStype:1  SubType=3
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
               MuBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 muPairProd:  for mu+  XStype:1  SubType=4
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      Sampling table 21x1001; from 0.85 GeV to 100 TeV 
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
+      Sampling table 21x1001; from 1 GeV to 100 TeV 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
           muPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 CoulombScat:  for mu+ XStype:1 SubType=1 BuildTable=1
       Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
 
@@ -473,30 +458,31 @@ msc:  for mu-  SubType= 10
         WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-muIoni:  for mu-  XStype:3  SubType=2
+muIoni:  for mu-  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
             ICRU73QO : Emin=    0 eV  Emax=  200 keV
-        MuBetheBloch : Emin=  200 keV Emax=  100 TeV
+          BetheBloch : Emin=  200 keV Emax=    1 GeV
+        MuBetheBloch : Emin=    1 GeV Emax=  100 TeV
 
 muBrems:  for mu-  XStype:1  SubType=3
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
               MuBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 muPairProd:  for mu-  XStype:1  SubType=4
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      Sampling table 21x1001; from 0.85 GeV to 100 TeV 
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
+      Sampling table 21x1001; from 1 GeV to 100 TeV 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
           muPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 CoulombScat:  for mu- XStype:1 SubType=1 BuildTable=1
       Used Lambda table of mu+
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
 
@@ -505,30 +491,30 @@ msc:  for pi+  SubType= 10
         WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-hIoni:  for pi+  XStype:3  SubType=2
+hIoni:  for pi+  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                Bragg : Emin=    0 eV  Emax=297.505 keV
           BetheBloch : Emin=297.505 keV Emax=  100 TeV
 
 hBrems:  for pi+  XStype:1  SubType=3
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 hPairProd:  for pi+  XStype:1  SubType=4
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       Sampling table 20x1001; from 1.11656 GeV to 100 TeV 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
            hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 CoulombScat:  for pi+ XStype:1 SubType=1 BuildTable=1
       Lambda table from threshold  to 100 TeV, 7 bins/decade, spline: 0
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
 
@@ -537,306 +523,414 @@ msc:  for pi-  SubType= 10
         WentzelVIUni : Emin=    0 eV  Emax=  100 TeV Nbins=84 100 eV  - 100 TeV
           StepLim=Minimal Rfact=0.2 Gfact=2.5 Sfact=0.6 DispFlag:0 Skin=1 Llim=1 mm
 
-hIoni:  for pi-  XStype:3  SubType=2
+hIoni:  for pi-  XStype:1  SubType=2
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
       Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
-      StepFunction=(0.2, 0.1 mm), integ: 3, fluct: 1, linLossLim= 0.01
+      StepFunction=(0.2, 0.1 mm), integ: 1, fluct: 1, linLossLim= 0.01
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
             ICRU73QO : Emin=    0 eV  Emax=297.505 keV
           BetheBloch : Emin=297.505 keV Emax=  100 TeV
 
 hBrems:  for pi-  XStype:1  SubType=3
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
                hBrem : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 hPairProd:  for pi-  XStype:1  SubType=4
       dE/dx and range tables from 100 eV  to 100 TeV in 84 bins
-      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 1
+      Lambda tables from threshold to 100 TeV, 7 bins/decade, spline: 0
       Sampling table 20x1001; from 1.11656 GeV to 100 TeV 
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
            hPairProd : Emin=    0 eV  Emax=  100 TeV  ModifiedMephi
 
 CoulombScat:  for pi- XStype:1 SubType=1 BuildTable=1
       Used Lambda table of pi+
-      ThetaMin(p) < Theta(degree) < 180, pLimit(GeV^1)= 0.139531
+      ThetaMin(p) < Theta(degree) < 180; pLimit(GeV^1)= 0.139531
       ===== EM models for the G4Region  DefaultRegionForTheWorld ======
   eCoulombScattering : Emin=    0 eV  Emax=  100 TeV
 
 ====================================================================
                   HADRONIC PROCESSES SUMMARY (verbose level 1)
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for neutron
+
   Process: hadElastic
         Model:             hElasticCHIPS: 0 eV  ---> 100 TeV
      Cr_sctns:        G4NeutronElasticXS: 0 eV  ---> 100 TeV
+
   Process: neutronInelastic
         Model:                      FTFP: 3 GeV ---> 100 TeV
         Model:            BertiniCascade: 0 eV  ---> 6 GeV
      Cr_sctns:      G4NeutronInelasticXS: 0 eV  ---> 100 TeV
+
   Process: nCapture
         Model:               nRadCapture: 0 eV  ---> 100 TeV
      Cr_sctns:        G4NeutronCaptureXS: 0 eV  ---> 100 TeV
+
   Process: nKiller
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for B-
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: B-Inelastic
         Model:                      FTFP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for D-
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: D-Inelastic
         Model:                      FTFP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for GenericIon
+
   Process: ionInelastic
         Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
         Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for He3
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV /n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+
   Process: He3Inelastic
         Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
         Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for alpha
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV /n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+
   Process: alphaInelastic
         Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
         Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for anti_He3
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV /n ---> 100.1 MeV/n
         Model:              AntiAElastic: 100 MeV/n ---> 100 TeV/n
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: anti_He3Inelastic
         Model:                      FTFP: 0 eV /n ---> 100 TeV/n
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: hFritiofCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for anti_alpha
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV /n ---> 100.1 MeV/n
         Model:              AntiAElastic: 100 MeV/n ---> 100 TeV/n
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: anti_alphaInelastic
         Model:                      FTFP: 0 eV /n ---> 100 TeV/n
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: hFritiofCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for anti_deuteron
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV /n ---> 100.1 MeV/n
         Model:              AntiAElastic: 100 MeV/n ---> 100 TeV/n
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: anti_deuteronInelastic
         Model:                      FTFP: 0 eV /n ---> 100 TeV/n
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: hFritiofCaptureAtRest
--------------------------------------------------------------------------
-                           Hadronic Processes for anti_hypertriton
-  Process: hFritiofCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for anti_lambda
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: anti_lambdaInelastic
         Model:                      FTFP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: hFritiofCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for anti_neutron
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
         Model:              AntiAElastic: 100 MeV ---> 100 TeV
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: anti_neutronInelastic
         Model:                      FTFP: 0 eV  ---> 100 TeV
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: hFritiofCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for anti_proton
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100.1 MeV
         Model:              AntiAElastic: 100 MeV ---> 100 TeV
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: anti_protonInelastic
         Model:                      FTFP: 0 eV  ---> 100 TeV
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: hFritiofCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for anti_triton
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV /n ---> 100.1 MeV/n
         Model:              AntiAElastic: 100 MeV/n ---> 100 TeV/n
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: anti_tritonInelastic
         Model:                      FTFP: 0 eV /n ---> 100 TeV/n
      Cr_sctns:              AntiAGlauber: 0 eV  ---> 25.6 PeV
+
   Process: hFritiofCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for deuteron
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV /n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+
   Process: dInelastic
         Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
         Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for e+
+
   Process: positronNuclear
         Model:   G4ElectroVDNuclearModel: 0 eV  ---> 1 PeV
      Cr_sctns:          ElectroNuclearXS: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for e-
+
   Process: electronNuclear
         Model:   G4ElectroVDNuclearModel: 0 eV  ---> 1 PeV
      Cr_sctns:          ElectroNuclearXS: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for gamma
+
   Process: photonNuclear
         Model:               GammaNPreco: 0 eV  ---> 200 MeV
         Model:            BertiniCascade: 199 MeV ---> 6 GeV
         Model:           TheoFSGenerator: 3 GeV ---> 100 TeV
      Cr_sctns:            GammaNuclearXS: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for kaon+
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: kaon+Inelastic
         Model:                      FTFP: 3 GeV ---> 100 TeV
         Model:            BertiniCascade: 0 eV  ---> 6 GeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for kaon-
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: kaon-Inelastic
         Model:                      FTFP: 3 GeV ---> 100 TeV
         Model:            BertiniCascade: 0 eV  ---> 6 GeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: hBertiniCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for lambda
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: lambdaInelastic
         Model:                      FTFP: 3 GeV ---> 100 TeV
         Model:            BertiniCascade: 0 eV  ---> 6 GeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for mu+
+
   Process: muonNuclear
         Model:      G4MuonVDNuclearModel: 0 eV  ---> 1 PeV
      Cr_sctns:     KokoulinMuonNuclearXS: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for mu-
+
   Process: muonNuclear
         Model:      G4MuonVDNuclearModel: 0 eV  ---> 1 PeV
      Cr_sctns:     KokoulinMuonNuclearXS: 0 eV  ---> 100 TeV
+
   Process: muMinusCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for pi+
+
   Process: hadElastic
         Model:           hElasticGlauber: 0 eV  ---> 100 TeV
      Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+
   Process: pi+Inelastic
         Model:                      FTFP: 3 GeV ---> 100 TeV
         Model:            BertiniCascade: 0 eV  ---> 6 GeV
      Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for pi-
+
   Process: hadElastic
         Model:           hElasticGlauber: 0 eV  ---> 100 TeV
      Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+
   Process: pi-Inelastic
         Model:                      FTFP: 3 GeV ---> 100 TeV
         Model:            BertiniCascade: 0 eV  ---> 6 GeV
      Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+
   Process: hBertiniCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for proton
+
   Process: hadElastic
         Model:             hElasticCHIPS: 0 eV  ---> 100 TeV
      Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
+
   Process: protonInelastic
         Model:                      FTFP: 3 GeV ---> 100 TeV
         Model:            BertiniCascade: 0 eV  ---> 6 GeV
      Cr_sctns:  BarashenkovGlauberGribov: 0 eV  ---> 100 TeV
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for sigma-
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV  ---> 100 TeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: sigma-Inelastic
         Model:                      FTFP: 3 GeV ---> 100 TeV
         Model:            BertiniCascade: 0 eV  ---> 6 GeV
      Cr_sctns:            Glauber-Gribov: 0 eV  ---> 100 TeV
+
   Process: hBertiniCaptureAtRest
------------------------------------------------------------------------
+
+---------------------------------------------------
                            Hadronic Processes for triton
+
   Process: hadElastic
         Model:              hElasticLHEP: 0 eV /n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+
   Process: tInelastic
         Model:  Binary Light Ion Cascade: 0 eV /n ---> 6 GeV/n
         Model:                      FTFP: 3 GeV/n ---> 100 TeV/n
      Cr_sctns:  Glauber-Gribov Nucl-nucl: 0 eV  ---> 25.6 PeV
+
+================================================================
 =======================================================================
-======       Geant4 Native Pre-compound Model Parameters       ========
+======       Pre-compound/De-excitation Physics Parameters     ========
 =======================================================================
-Type of pre-compound inverse x-section              1
+Type of pre-compound inverse x-section              3
 Pre-compound model active                           1
-Pre-compound excitation low energy                  100 keV
-Pre-compound excitation high energy                 30 MeV
-Angular generator for pre-compound model            1
-Use NeverGoBack option for pre-compound model       0
-Use SoftCutOff option for pre-compound model        0
-Use CEM transitions for pre-compound model          1
-Use GNASH transitions for pre-compound model        0
-Use HETC submodel for pre-compound model            0
-=======================================================================
-======       Nuclear De-excitation Module Parameters           ========
-=======================================================================
+Pre-compound excitation low energy (MeV)            0.1
+Pre-compound excitation high energy (MeV)           30
 Type of de-excitation inverse x-section             3
 Type of de-excitation factory                       Evaporation+GEM
 Number of de-excitation channels                    68
-Min excitation energy                               10 eV 
-Min energy per nucleon for multifragmentation       200 GeV
-Limit excitation energy for Fermi BreakUp           20 MeV
+Min excitation energy (keV)                         0.01
+Min energy per nucleon for multifragmentation (MeV) 2e+05
+Limit excitation energy for Fermi BreakUp (MeV)     20
 Level density (1/MeV)                               0.075
 Use simple level density model                      1
 Use discrete excitation energy of the residual      0
-Time limit for long lived isomeres                  1 ns 
+Time limit for long lived isomeres (ns)             1
 Isomer production flag                              1
 Internal e- conversion flag                         1
-Store e- internal conversion data                   1
+Store e- internal conversion data                   0
 Correlated gamma emission flag                      0
 Max 2J for sampling of angular correlations         10
 =======================================================================
 G4WT1 > Using 
 G4WT0 > Using 
+G4WT3 > Using 
+G4WT2 > Using 
+G4WT4 > Using 
+G4WT5 > Using 
+G4WT6 > Using 
+G4WT7 > Using 
+G4WT8 > Using 
+G4WT9 > Using 
+G4WT12 > Using 
+G4WT11 > Using 
+G4WT10 > Using 
+G4WT13 > Using 
+G4WT14 > Using 
+G4WT15 > Using 
+G4WT16 > Using 
+G4WT17 > Using 
+G4WT18 > Using 
+G4WT19 > Using 
+G4WT20 > Using 
+G4WT21 > Using 
+G4WT22 > Using 
+G4WT23 > Using 
+G4WT24 > Using 
+G4WT25 > Using 
+G4WT26 > Using 
+G4WT27 > Using 
+G4WT28 > Using 
+G4WT29 > Using 
+G4WT30 > Using 
+G4WT31 > Using 
 
 Region <DefaultRegionForTheWorld> --  -- appears in <World> world volume
  This region is in the mass world.
@@ -876,158 +970,2273 @@ Index : 2     used in the geometry : Yes
 
 ==================================================================
 
-Start closing geometry.
---------------------------------------------------------------------------------
-G4GeometryManager::ReportVoxelStats -- Voxel Statistics
-
-    Total memory consumed for geometry optimisation:   4 kByte
-    Total CPU time elapsed for geometry optimisation: 0 seconds
-
-    Voxelisation: top CPU users:
-    Percent   Total CPU    System CPU       Memory  Volume
-    -------   ----------   ----------     --------  ----------
-       0.00         0.00         0.00            4k Calorimeter
-       0.00         0.00         0.00            0k Layer
-
-    Voxelisation: top memory users:
-    Percent     Memory      Heads    Nodes   Pointers    Total CPU    Volume
-    -------   --------     ------   ------   --------   ----------    ----------
-      94.83          4k         1       80         80         0.00    Calorimeter
-       5.17          0k         1        3          4         0.00    Layer
---------------------------------------------------------------------------------
-
+G4VisManager: Using G4TrajectoryDrawByCharge as fallback trajectory model.
+See commands in /vis/modeling/trajectories/ for other options.
 ### Run 0 starts.
 ### Run 0 start.
-... set ntuple merging row mode : row-wise - done
-... create file : plz_work_kthxbai.root - done
-... open analysis file : plz_work_kthxbai.root - done
-... open analysis file : plz_work_kthxbai.root - done
+G4WT8 > ### Run 0 starts on worker thread 8.
+G4WT8 > ### Run 0 start.
+G4WT9 > ### Run 0 starts on worker thread 9.
+G4WT31 > ### Run 0 starts on worker thread 31.
+G4WT21 > ### Run 0 starts on worker thread 21.
+G4WT14 > ### Run 0 starts on worker thread 14.
+G4WT5 > ### Run 0 starts on worker thread 5.
+G4WT5 > ### Run 0 start.
 G4WT0 > ### Run 0 starts on worker thread 0.
+G4WT0 > ### Run 0 start.
+G4WT6 > ### Run 0 starts on worker thread 6.
+G4WT9 > ### Run 0 start.
+G4WT4 > ### Run 0 starts on worker thread 4.
+G4WT4 > ### Run 0 start.
+G4WT25 > ### Run 0 starts on worker thread 25.
+G4WT25 > ### Run 0 start.
+G4WT19 > ### Run 0 starts on worker thread 19.
+G4WT19 > ### Run 0 start.
+G4WT17 > ### Run 0 starts on worker thread 17.
+G4WT17 > ### Run 0 start.
+G4WT27 > ### Run 0 starts on worker thread 27.
+G4WT27 > ### Run 0 start.
+G4WT31 > ### Run 0 start.
+G4WT12 > ### Run 0 starts on worker thread 12.
+G4WT21 > ### Run 0 start.
+G4WT26 > ### Run 0 starts on worker thread 26.
+G4WT26 > ### Run 0 start.
+G4WT13 > ### Run 0 starts on worker thread 13.
+G4WT13 > ### Run 0 start.
 G4WT1 > ### Run 0 starts on worker thread 1.
 G4WT1 > ### Run 0 start.
-G4WT0 > ### Run 0 start.
-G4WT1 > ... set ntuple merging row mode : row-wise - done
-G4WT0 > ... set ntuple merging row mode : row-wise - done
-G4WT0 > ... create file : plz_work_kthxbai_t0.root - done
-G4WT0 > ... open analysis file : plz_work_kthxbai.root - done
-G4WT1 > ... create file : plz_work_kthxbai_t1.root - done
-G4WT1 > ... open analysis file : plz_work_kthxbai.root - done
-G4WT1 > ... open analysis file : plz_work_kthxbai_t1.root - done
-G4WT1 > --> Event 0 starts with initial seeds (5409645,9807945).
-G4WT0 > ... open analysis file : plz_work_kthxbai_t0.root - done
-G4WT0 > --> Event 2 starts with initial seeds (21485208,7051743).
-G4WT0 > --> Event 3 starts with initial seeds (92293513,36481316).
-G4WT1 > --> Event 1 starts with initial seeds (57493888,80790302).
-G4WT0 > --> Event 4 starts with initial seeds (71100035,20664583).
-G4WT1 > --> Event 6 starts with initial seeds (22980130,33457851).
-G4WT0 > --> Event 5 starts with initial seeds (86436595,86039452).
-G4WT1 > --> Event 7 starts with initial seeds (54353617,20707769).
-G4WT0 > --> Event 8 starts with initial seeds (35732435,12440718).
+G4WT28 > ### Run 0 starts on worker thread 28.
+G4WT28 > ### Run 0 start.
+G4WT18 > ### Run 0 starts on worker thread 18.
+G4WT18 > ### Run 0 start.
+G4WT10 > ### Run 0 starts on worker thread 10.
+G4WT10 > ### Run 0 start.
+G4WT30 > ### Run 0 starts on worker thread 30.
+G4WT30 > ### Run 0 start.
+G4WT6 > ### Run 0 start.
+G4WT23 > ### Run 0 starts on worker thread 23.
+G4WT23 > ### Run 0 start.
+G4WT20 > ### Run 0 starts on worker thread 20.
+G4WT7 > ### Run 0 starts on worker thread 7.
+G4WT7 > ### Run 0 start.
+G4WT12 > ### Run 0 start.
+G4WT14 > ### Run 0 start.
+G4WT2 > ### Run 0 starts on worker thread 2.
+G4WT2 > ### Run 0 start.
+G4WT29 > ### Run 0 starts on worker thread 29.
+G4WT15 > ### Run 0 starts on worker thread 15.
+G4WT3 > ### Run 0 starts on worker thread 3.
+G4WT3 > ### Run 0 start.
+G4WT24 > ### Run 0 starts on worker thread 24.
+G4WT24 > ### Run 0 start.
+G4WT11 > ### Run 0 starts on worker thread 11.
+G4WT11 > ### Run 0 start.
+G4WT29 > ### Run 0 start.
+G4WT15 > ### Run 0 start.
+G4WT16 > ### Run 0 starts on worker thread 16.
+G4WT16 > ### Run 0 start.
+G4WT22 > ### Run 0 starts on worker thread 22.
+G4WT22 > ### Run 0 start.
+G4WT20 > ### Run 0 start.
+G4WT23 > --> Event 0 starts with initial seeds (63522256,11301778).
+G4WT9 > --> Event 5 starts with initial seeds (3451142,81676578).
+G4WT23 > --> Event 1 starts with initial seeds (47712080,58904798).
+G4WT26 > --> Event 10 starts with initial seeds (43017536,40216872).
+G4WT8 > --> Event 15 starts with initial seeds (52927303,83922045).
+G4WT17 > --> Event 20 starts with initial seeds (61155015,35236911).
+G4WT5 > --> Event 25 starts with initial seeds (42127469,66362075).
+G4WT0 > --> Event 30 starts with initial seeds (53879560,51070273).
+G4WT25 > --> Event 35 starts with initial seeds (18642910,19195048).
+G4WT27 > --> Event 40 starts with initial seeds (10684709,57392480).
+G4WT3 > --> Event 45 starts with initial seeds (70720007,43789408).
+G4WT29 > --> Event 50 starts with initial seeds (78810956,33608593).
+G4WT6 > --> Event 60 starts with initial seeds (80525819,45761387).
+G4WT20 > --> Event 55 starts with initial seeds (47698074,23037183).
+G4WT19 > --> Event 65 starts with initial seeds (23414355,73336729).
+G4WT12 > --> Event 70 starts with initial seeds (97513281,24323577).
+G4WT8 > --> Event 16 starts with initial seeds (99808294,89994766).
+G4WT5 > --> Event 26 starts with initial seeds (87526683,73172313).
+G4WT1 > --> Event 75 starts with initial seeds (36085011,75703949).
+G4WT4 > --> Event 80 starts with initial seeds (45706346,34350665).
+G4WT15 > --> Event 85 starts with initial seeds (12033066,51933727).
+G4WT16 > --> Event 90 starts with initial seeds (35358917,26670674).
+G4WT3 > --> Event 46 starts with initial seeds (78234296,75019812).
+G4WT8 > --> Event 17 starts with initial seeds (83740711,97990360).
+G4WT27 > --> Event 41 starts with initial seeds (98435129,6195098).
+G4WT31 > --> Event 95 starts with initial seeds (36253107,69431808).
+G4WT11 > --> Event 100 starts with initial seeds (82571575,74609643).
+G4WT2 > --> Event 105 starts with initial seeds (23618658,57398141).
+G4WT22 > --> Event 110 starts with initial seeds (48206787,74167947).
+G4WT18 > --> Event 115 starts with initial seeds (66001198,38391349).
+G4WT30 > --> Event 120 starts with initial seeds (72667599,38355315).
+G4WT24 > --> Event 125 starts with initial seeds (30168246,60900488).
+G4WT10 > --> Event 130 starts with initial seeds (65759427,74910669).
+G4WT29 > --> Event 51 starts with initial seeds (21423616,71620856).
+G4WT21 > --> Event 135 starts with initial seeds (82166480,65828389).
+G4WT27 > --> Event 42 starts with initial seeds (32010085,88200499).
+G4WT14 > --> Event 140 starts with initial seeds (89456149,30599799).
+G4WT2 > --> Event 106 starts with initial seeds (9223442,19490020).
+G4WT22 > --> Event 111 starts with initial seeds (48093558,93980998).
+G4WT13 > --> Event 145 starts with initial seeds (90091586,55984620).
+G4WT28 > --> Event 150 starts with initial seeds (59082378,61163598).
+G4WT2 > --> Event 107 starts with initial seeds (255847,44289110).
+G4WT7 > --> Event 155 starts with initial seeds (17870437,22402230).
+G4WT3 > --> Event 47 starts with initial seeds (66219252,9051583).
+G4WT5 > --> Event 27 starts with initial seeds (96624966,24469639).
+G4WT27 > --> Event 43 starts with initial seeds (67601609,63760877).
+G4WT30 > --> Event 121 starts with initial seeds (37958133,90871251).
+G4WT8 > --> Event 18 starts with initial seeds (74535551,34757858).
+G4WT27 > --> Event 44 starts with initial seeds (6866778,34023980).
+G4WT7 > --> Event 156 starts with initial seeds (50825502,38455626).
+G4WT15 > --> Event 86 starts with initial seeds (10461181,97574377).
+G4WT11 > --> Event 101 starts with initial seeds (68212022,89271017).
+G4WT2 > --> Event 108 starts with initial seeds (15307017,12944165).
+G4WT22 > --> Event 112 starts with initial seeds (27980524,78334762).
+G4WT7 > --> Event 157 starts with initial seeds (92497888,42080716).
+G4WT11 > --> Event 102 starts with initial seeds (59506622,31180591).
+G4WT19 > --> Event 66 starts with initial seeds (84116477,97777451).
+G4WT19 > --> Event 67 starts with initial seeds (82403455,8871877).
+G4WT27 > --> Event 160 starts with initial seeds (4882726,44128941).
+G4WT19 > --> Event 68 starts with initial seeds (16704013,72779193).
+G4WT7 > --> Event 158 starts with initial seeds (63056838,60962292).
+G4WT8 > --> Event 19 starts with initial seeds (62569623,20587097).
+G4WT7 > --> Event 159 starts with initial seeds (75833959,959596).
+G4WT8 > --> Event 165 starts with initial seeds (49027043,35649334).
+G4WT15 > --> Event 87 starts with initial seeds (63818656,43926017).
+G4WT1 > --> Event 76 starts with initial seeds (21401117,17416152).
+G4WT8 > --> Event 166 starts with initial seeds (82171568,27153023).
+G4WT27 > --> Event 161 starts with initial seeds (45693032,81380804).
+G4WT18 > --> Event 116 starts with initial seeds (70557871,38706828).
+G4WT18 > --> Event 117 starts with initial seeds (45616105,42617338).
+G4WT18 > --> Event 118 starts with initial seeds (77892200,67763366).
+G4WT18 > --> Event 119 starts with initial seeds (86764340,95607763).
+G4WT16 > --> Event 91 starts with initial seeds (97023758,93806968).
+G4WT0 > --> Event 31 starts with initial seeds (90602559,66621650).
+G4WT16 > --> Event 92 starts with initial seeds (28662906,96081351).
+G4WT16 > --> Event 93 starts with initial seeds (84547181,52091371).
+G4WT5 > --> Event 28 starts with initial seeds (6875101,15650339).
+G4WT5 > --> Event 29 starts with initial seeds (71919963,95609680).
+G4WT5 > --> Event 170 starts with initial seeds (99682989,4654833).
+G4WT11 > --> Event 103 starts with initial seeds (87408318,47222243).
+G4WT5 > --> Event 171 starts with initial seeds (40173252,59637781).
+G4WT5 > --> Event 172 starts with initial seeds (34368277,42141955).
+G4WT27 > --> Event 162 starts with initial seeds (30676263,60650028).
+G4WT27 > --> Event 163 starts with initial seeds (81538069,73466352).
+G4WT27 > --> Event 164 starts with initial seeds (56107031,46251284).
+G4WT14 > --> Event 141 starts with initial seeds (46208409,97312681).
+G4WT15 > --> Event 88 starts with initial seeds (39157211,46255199).
+G4WT17 > --> Event 21 starts with initial seeds (14216972,8615059).
+G4WT2 > --> Event 109 starts with initial seeds (90311023,86846510).
+G4WT2 > --> Event 175 starts with initial seeds (69656014,27801051).
+G4WT17 > --> Event 22 starts with initial seeds (68369310,34541284).
+G4WT22 > --> Event 113 starts with initial seeds (1280429,42954029).
+G4WT28 > --> Event 151 starts with initial seeds (14499088,71559098).
+G4WT6 > --> Event 61 starts with initial seeds (1274681,14523905).
+G4WT6 > --> Event 62 starts with initial seeds (46240988,19899124).
+G4WT30 > --> Event 122 starts with initial seeds (20828571,24173712).
+G4WT18 > --> Event 180 starts with initial seeds (71865551,36617293).
+G4WT18 > --> Event 181 starts with initial seeds (25571666,36434451).
+G4WT18 > --> Event 182 starts with initial seeds (72199332,95800678).
+G4WT6 > --> Event 63 starts with initial seeds (84619915,8323717).
+G4WT31 > --> Event 96 starts with initial seeds (87317687,39936407).
+G4WT11 > --> Event 104 starts with initial seeds (1384127,36098657).
+G4WT21 > --> Event 136 starts with initial seeds (1641943,44459903).
+G4WT8 > --> Event 167 starts with initial seeds (99138242,50732196).
+G4WT8 > --> Event 168 starts with initial seeds (81675285,77624124).
+G4WT8 > --> Event 169 starts with initial seeds (65112222,56034990).
+G4WT8 > --> Event 185 starts with initial seeds (13043055,90868778).
+G4WT10 > --> Event 131 starts with initial seeds (94226796,22691250).
+G4WT18 > --> Event 183 starts with initial seeds (49345318,62690940).
+G4WT10 > --> Event 132 starts with initial seeds (81844564,59042849).
+G4WT3 > --> Event 48 starts with initial seeds (76718965,43673113).
+G4WT10 > --> Event 133 starts with initial seeds (98397460,81783174).
+G4WT27 > --> Event 190 starts with initial seeds (77641270,61918113).
+G4WT27 > --> Event 191 starts with initial seeds (2111020,74954075).
+G4WT22 > --> Event 114 starts with initial seeds (60338629,47200223).
+G4WT22 > --> Event 195 starts with initial seeds (78958530,16149090).
+G4WT27 > --> Event 192 starts with initial seeds (31051193,29701710).
+G4WT20 > --> Event 56 starts with initial seeds (44952246,50553308).
+G4WT15 > --> Event 89 starts with initial seeds (47610751,46208754).
+G4WT28 > --> Event 152 starts with initial seeds (51906893,44802354).
+G4WT18 > --> Event 184 starts with initial seeds (71522373,66102948).
+G4WT18 > --> Event 200 starts with initial seeds (45827628,28780154).
+G4WT1 > --> Event 77 starts with initial seeds (55216330,22641501).
+G4WT18 > --> Event 201 starts with initial seeds (3509111,71642357).
+G4WT31 > --> Event 97 starts with initial seeds (56305950,18252424).
+G4WT12 > --> Event 71 starts with initial seeds (67459016,95519111).
+G4WT1 > --> Event 78 starts with initial seeds (47683715,48039562).
+G4WT1 > --> Event 79 starts with initial seeds (22102348,66414253).
+G4WT0 > --> Event 32 starts with initial seeds (71668088,46856142).
+G4WT0 > --> Event 33 starts with initial seeds (4487176,80713348).
+G4WT26 > --> Event 11 starts with initial seeds (32063425,88246850).
+G4WT30 > --> Event 123 starts with initial seeds (77969813,97091615).
+G4WT4 > --> Event 81 starts with initial seeds (49798194,50382153).
+G4WT4 > --> Event 82 starts with initial seeds (55297564,76017143).
+G4WT11 > --> Event 205 starts with initial seeds (56494608,76486270).
+G4WT4 > --> Event 83 starts with initial seeds (13391054,54905772).
+G4WT11 > --> Event 206 starts with initial seeds (4520902,13510780).
+G4WT11 > --> Event 207 starts with initial seeds (24558638,93725647).
+G4WT30 > --> Event 124 starts with initial seeds (38689668,82637568).
+G4WT30 > --> Event 210 starts with initial seeds (40499429,41280247).
+G4WT3 > --> Event 49 starts with initial seeds (13943710,10547381).
+G4WT5 > --> Event 173 starts with initial seeds (25142627,90251164).
+G4WT25 > --> Event 36 starts with initial seeds (63393081,32871616).
+G4WT25 > --> Event 37 starts with initial seeds (10991565,85540322).
+G4WT25 > --> Event 38 starts with initial seeds (9339215,50488151).
+G4WT4 > --> Event 84 starts with initial seeds (87976139,87055833).
+G4WT4 > --> Event 215 starts with initial seeds (52100795,25408806).
+G4WT2 > --> Event 176 starts with initial seeds (86884247,33547313).
+G4WT2 > --> Event 177 starts with initial seeds (92007826,71843293).
+G4WT22 > --> Event 196 starts with initial seeds (91102978,25771755).
+G4WT28 > --> Event 153 starts with initial seeds (99638621,24312359).
+G4WT16 > --> Event 94 starts with initial seeds (93174132,86977245).
+G4WT28 > --> Event 154 starts with initial seeds (48990825,6200057).
+G4WT28 > --> Event 220 starts with initial seeds (6877534,3818092).
+G4WT28 > --> Event 221 starts with initial seeds (45972396,57198258).
+G4WT28 > --> Event 222 starts with initial seeds (7318919,89488752).
+G4WT19 > --> Event 69 starts with initial seeds (84208706,94094194).
+G4WT19 > --> Event 225 starts with initial seeds (79581046,91030884).
+G4WT2 > --> Event 178 starts with initial seeds (28499337,57052018).
+G4WT20 > --> Event 57 starts with initial seeds (29519343,1095013).
+G4WT7 > --> Event 230 starts with initial seeds (11531385,45160906).
+G4WT31 > --> Event 98 starts with initial seeds (78553817,30810414).
+G4WT9 > --> Event 6 starts with initial seeds (10018487,75502987).
+G4WT31 > --> Event 99 starts with initial seeds (52237118,64973982).
+G4WT20 > --> Event 58 starts with initial seeds (94698827,22734404).
+G4WT18 > --> Event 202 starts with initial seeds (43466643,56026985).
+G4WT8 > --> Event 186 starts with initial seeds (72784202,45299741).
+G4WT8 > --> Event 187 starts with initial seeds (77852656,27705612).
+G4WT14 > --> Event 142 starts with initial seeds (59166037,50950411).
+G4WT14 > --> Event 143 starts with initial seeds (74157224,36451923).
+G4WT9 > --> Event 7 starts with initial seeds (14082916,74576965).
+G4WT9 > --> Event 8 starts with initial seeds (19828776,89517316).
+G4WT9 > --> Event 9 starts with initial seeds (95796049,15165030).
+G4WT20 > --> Event 59 starts with initial seeds (71290555,48395945).
+G4WT24 > --> Event 126 starts with initial seeds (14863872,78090843).
+G4WT11 > --> Event 208 starts with initial seeds (49404624,25007222).
+G4WT11 > --> Event 209 starts with initial seeds (52824833,12211802).
+G4WT11 > --> Event 235 starts with initial seeds (73918863,25279266).
+G4WT3 > --> Event 240 starts with initial seeds (80531863,14436039).
+G4WT3 > --> Event 241 starts with initial seeds (41857240,56765595).
+G4WT3 > --> Event 242 starts with initial seeds (90492845,73402711).
+G4WT1 > --> Event 245 starts with initial seeds (89456867,86591731).
+G4WT26 > --> Event 12 starts with initial seeds (64937298,70351052).
+G4WT11 > --> Event 236 starts with initial seeds (60406675,74858585).
+G4WT8 > --> Event 188 starts with initial seeds (40097573,20697228).
+G4WT11 > --> Event 237 starts with initial seeds (37546260,75706938).
+G4WT2 > --> Event 179 starts with initial seeds (72204068,15816229).
+G4WT15 > --> Event 250 starts with initial seeds (36706224,34693526).
+G4WT30 > --> Event 211 starts with initial seeds (83261667,73721832).
+G4WT12 > --> Event 72 starts with initial seeds (76808692,53018500).
+G4WT30 > --> Event 212 starts with initial seeds (96227254,68545349).
+G4WT30 > --> Event 213 starts with initial seeds (11274716,4865390).
+G4WT30 > --> Event 214 starts with initial seeds (63506797,12192321).
+G4WT30 > --> Event 255 starts with initial seeds (35514033,1685570).
+G4WT16 > --> Event 260 starts with initial seeds (3559158,68144470).
+G4WT16 > --> Event 261 starts with initial seeds (50499807,61832119).
+G4WT31 > --> Event 265 starts with initial seeds (39361843,81665998).
+G4WT0 > --> Event 34 starts with initial seeds (98929983,87226491).
+G4WT23 > --> Event 2 starts with initial seeds (535815,10464758).
+G4WT5 > --> Event 174 starts with initial seeds (2931077,4192085).
+G4WT8 > --> Event 189 starts with initial seeds (21060793,47979959).
+G4WT8 > --> Event 270 starts with initial seeds (12130440,8923020).
+G4WT10 > --> Event 134 starts with initial seeds (84471571,95822263).
+G4WT9 > --> Event 275 starts with initial seeds (52122393,21457254).
+G4WT18 > --> Event 203 starts with initial seeds (46766621,95939967).
+G4WT23 > --> Event 3 starts with initial seeds (82419006,34613587).
+G4WT23 > --> Event 4 starts with initial seeds (34518873,24557097).
+G4WT23 > --> Event 280 starts with initial seeds (15703572,98502428).
+G4WT23 > --> Event 281 starts with initial seeds (38232908,40262828).
+G4WT23 > --> Event 282 starts with initial seeds (38522037,76404939).
+G4WT14 > --> Event 144 starts with initial seeds (8556067,47846470).
+G4WT3 > --> Event 243 starts with initial seeds (24298177,88109138).
+G4WT27 > --> Event 193 starts with initial seeds (656418,79629549).
+G4WT27 > --> Event 194 starts with initial seeds (36873772,51622967).
+G4WT6 > --> Event 64 starts with initial seeds (58372703,92271449).
+G4WT6 > --> Event 285 starts with initial seeds (46224796,88094963).
+G4WT6 > --> Event 286 starts with initial seeds (20850435,93338142).
+G4WT21 > --> Event 137 starts with initial seeds (51324380,82349063).
+G4WT21 > --> Event 138 starts with initial seeds (32848541,71721453).
+G4WT24 > --> Event 127 starts with initial seeds (30502214,96733209).
+G4WT1 > --> Event 246 starts with initial seeds (82494267,91154300).
+G4WT22 > --> Event 197 starts with initial seeds (17520736,31352042).
+G4WT22 > --> Event 198 starts with initial seeds (31201401,47938364).
+G4WT22 > --> Event 199 starts with initial seeds (36052189,47909737).
+G4WT24 > --> Event 128 starts with initial seeds (2111209,37277516).
+G4WT24 > --> Event 129 starts with initial seeds (74739526,33751489).
+G4WT0 > --> Event 290 starts with initial seeds (13160389,55746844).
+G4WT0 > --> Event 291 starts with initial seeds (35853812,38280216).
+G4WT13 > --> Event 146 starts with initial seeds (98597170,95680266).
+G4WT13 > --> Event 147 starts with initial seeds (63925522,69846542).
+G4WT2 > --> Event 295 starts with initial seeds (43979447,34524405).
+G4WT9 > --> Event 276 starts with initial seeds (35818245,85037411).
+G4WT2 > --> Event 296 starts with initial seeds (76105382,643629).
+G4WT2 > --> Event 297 starts with initial seeds (44810708,33143906).
+G4WT14 > --> Event 300 starts with initial seeds (82823311,95462789).
+G4WT19 > --> Event 226 starts with initial seeds (9725169,12651182).
+G4WT8 > --> Event 271 starts with initial seeds (41265994,26315222).
+G4WT8 > --> Event 272 starts with initial seeds (43623129,27924054).
+G4WT8 > --> Event 273 starts with initial seeds (42625187,28043395).
+G4WT13 > --> Event 148 starts with initial seeds (65122021,11508403).
+G4WT4 > --> Event 216 starts with initial seeds (29685324,66406575).
+G4WT30 > --> Event 256 starts with initial seeds (88101340,51740391).
+G4WT4 > --> Event 217 starts with initial seeds (39584661,98347333).
+G4WT26 > --> Event 13 starts with initial seeds (88668298,90327065).
+G4WT31 > --> Event 266 starts with initial seeds (73002218,65913555).
+G4WT3 > --> Event 244 starts with initial seeds (93772968,69329064).
+G4WT1 > --> Event 247 starts with initial seeds (70687716,37618660).
+G4WT3 > --> Event 305 starts with initial seeds (70149881,44832260).
+G4WT1 > --> Event 248 starts with initial seeds (32506044,59440948).
+G4WT11 > --> Event 238 starts with initial seeds (69184008,47078646).
+G4WT31 > --> Event 267 starts with initial seeds (41783610,77721105).
+G4WT28 > --> Event 223 starts with initial seeds (36957474,90277793).
+G4WT28 > --> Event 224 starts with initial seeds (97959125,44650116).
+G4WT26 > --> Event 14 starts with initial seeds (75453656,60113444).
+G4WT9 > --> Event 277 starts with initial seeds (25707439,15872473).
+G4WT29 > --> Event 52 starts with initial seeds (61023998,80706039).
+G4WT29 > --> Event 53 starts with initial seeds (28018953,24411085).
+G4WT17 > --> Event 23 starts with initial seeds (11464525,3762061).
+G4WT17 > --> Event 24 starts with initial seeds (2112620,2479415).
+G4WT7 > --> Event 231 starts with initial seeds (42946714,52581881).
+G4WT7 > --> Event 232 starts with initial seeds (93064556,90825287).
+G4WT8 > --> Event 274 starts with initial seeds (39116659,88673617).
+G4WT20 > --> Event 310 starts with initial seeds (67677936,10645384).
+G4WT20 > --> Event 311 starts with initial seeds (54991286,72484003).
+G4WT20 > --> Event 312 starts with initial seeds (55432837,16395542).
+G4WT20 > --> Event 313 starts with initial seeds (2186148,8633175).
+G4WT4 > --> Event 218 starts with initial seeds (74580907,81564794).
+G4WT10 > --> Event 315 starts with initial seeds (38620586,90618839).
+G4WT31 > --> Event 268 starts with initial seeds (21931942,69236692).
+G4WT18 > --> Event 204 starts with initial seeds (85831010,5341515).
+G4WT5 > --> Event 320 starts with initial seeds (59490718,49495698).
+G4WT18 > --> Event 325 starts with initial seeds (56789998,84802687).
+G4WT10 > --> Event 316 starts with initial seeds (85295312,61170967).
+G4WT18 > --> Event 326 starts with initial seeds (74791164,74368624).
+G4WT1 > --> Event 249 starts with initial seeds (80924639,55408619).
+G4WT16 > --> Event 262 starts with initial seeds (22460351,71213765).
+G4WT20 > --> Event 314 starts with initial seeds (69453840,44241530).
+G4WT5 > --> Event 321 starts with initial seeds (49705124,66382481).
+G4WT2 > --> Event 298 starts with initial seeds (40047827,60919781).
+G4WT13 > --> Event 149 starts with initial seeds (35468723,64599581).
+G4WT2 > --> Event 299 starts with initial seeds (98922227,44172367).
+G4WT9 > --> Event 278 starts with initial seeds (73684331,58312236).
+G4WT9 > --> Event 279 starts with initial seeds (70523535,4352868).
+G4WT18 > --> Event 327 starts with initial seeds (29845191,69365247).
+G4WT4 > --> Event 219 starts with initial seeds (37951927,66876562).
+G4WT4 > --> Event 330 starts with initial seeds (70363624,12170531).
+G4WT21 > --> Event 139 starts with initial seeds (52452378,73598223).
+G4WT4 > --> Event 331 starts with initial seeds (84042369,7111296).
+G4WT21 > --> Event 335 starts with initial seeds (77932987,20740893).
+G4WT15 > --> Event 251 starts with initial seeds (97290712,7398544).
+G4WT10 > --> Event 317 starts with initial seeds (5369889,7261119).
+G4WT29 > --> Event 54 starts with initial seeds (1160094,12573816).
+G4WT11 > --> Event 239 starts with initial seeds (88595156,2534368).
+G4WT11 > --> Event 340 starts with initial seeds (52893046,69987867).
+G4WT19 > --> Event 227 starts with initial seeds (99018075,76710044).
+G4WT11 > --> Event 341 starts with initial seeds (68944105,59960820).
+G4WT21 > --> Event 336 starts with initial seeds (57086453,62660784).
+G4WT15 > --> Event 252 starts with initial seeds (61324609,35889486).
+G4WT14 > --> Event 301 starts with initial seeds (21760552,42803132).
+G4WT14 > --> Event 302 starts with initial seeds (7301996,59614817).
+G4WT14 > --> Event 303 starts with initial seeds (30320863,59296617).
+G4WT19 > --> Event 228 starts with initial seeds (79129807,83518243).
+G4WT22 > --> Event 345 starts with initial seeds (85073766,63829073).
+G4WT20 > --> Event 350 starts with initial seeds (70215210,28339169).
+G4WT14 > --> Event 304 starts with initial seeds (16811558,51984287).
+G4WT14 > --> Event 355 starts with initial seeds (73059746,68011937).
+G4WT14 > --> Event 356 starts with initial seeds (9685418,22473141).
+G4WT26 > --> Event 360 starts with initial seeds (6417201,32344435).
+G4WT23 > --> Event 283 starts with initial seeds (48700794,6538937).
+G4WT23 > --> Event 284 starts with initial seeds (91909763,57597862).
+G4WT23 > --> Event 365 starts with initial seeds (32770334,15684185).
+G4WT23 > --> Event 366 starts with initial seeds (29560532,70385289).
+G4WT23 > --> Event 367 starts with initial seeds (95727369,29821214).
+G4WT23 > --> Event 368 starts with initial seeds (5988547,90675846).
+G4WT2 > --> Event 370 starts with initial seeds (34315201,70010169).
+G4WT20 > --> Event 351 starts with initial seeds (90696138,42583207).
+G4WT20 > --> Event 352 starts with initial seeds (8972043,35367032).
+G4WT23 > --> Event 369 starts with initial seeds (81179459,85332721).
+G4WT23 > --> Event 375 starts with initial seeds (74634084,55249499).
+G4WT1 > --> Event 380 starts with initial seeds (55536270,56080896).
+G4WT1 > --> Event 381 starts with initial seeds (16261131,28603671).
+G4WT11 > --> Event 342 starts with initial seeds (20000814,29918073).
+G4WT12 > --> Event 73 starts with initial seeds (49555585,51745047).
+G4WT12 > --> Event 74 starts with initial seeds (90383636,45592005).
+G4WT2 > --> Event 371 starts with initial seeds (82590480,95926063).
+G4WT15 > --> Event 253 starts with initial seeds (32808478,98339349).
+G4WT12 > --> Event 385 starts with initial seeds (51615443,62222133).
+G4WT27 > --> Event 390 starts with initial seeds (86958225,51645137).
+G4WT13 > --> Event 395 starts with initial seeds (85900228,38217042).
+G4WT10 > --> Event 318 starts with initial seeds (58904884,26376320).
+G4WT27 > --> Event 391 starts with initial seeds (84262485,54632556).
+G4WT14 > --> Event 357 starts with initial seeds (69535517,34477503).
+G4WT14 > --> Event 358 starts with initial seeds (29003330,91044086).
+G4WT14 > --> Event 359 starts with initial seeds (52994543,580572).
+G4WT9 > --> Event 400 starts with initial seeds (50745131,60908657).
+G4WT6 > --> Event 287 starts with initial seeds (27896044,75013494).
+G4WT3 > --> Event 306 starts with initial seeds (89006631,38742043).
+G4WT25 > --> Event 39 starts with initial seeds (5279704,24944740).
+G4WT1 > --> Event 382 starts with initial seeds (75132683,6987694).
+G4WT18 > --> Event 328 starts with initial seeds (9381878,74715233).
+G4WT1 > --> Event 383 starts with initial seeds (68471787,28607004).
+G4WT10 > --> Event 319 starts with initial seeds (38671072,71664203).
+G4WT10 > --> Event 405 starts with initial seeds (8336211,42785574).
+G4WT10 > --> Event 406 starts with initial seeds (63605397,46951683).
+G4WT27 > --> Event 392 starts with initial seeds (90193788,17232018).
+G4WT14 > --> Event 410 starts with initial seeds (62088945,64505622).
+G4WT14 > --> Event 411 starts with initial seeds (46946787,75764909).
+G4WT23 > --> Event 376 starts with initial seeds (96169839,55325810).
+G4WT25 > --> Event 415 starts with initial seeds (14107787,97344654).
+G4WT31 > --> Event 269 starts with initial seeds (47050307,18773643).
+G4WT12 > --> Event 386 starts with initial seeds (57408142,74891883).
+G4WT7 > --> Event 233 starts with initial seeds (38210172,11555079).
+G4WT12 > --> Event 387 starts with initial seeds (76552961,3482066).
+G4WT0 > --> Event 292 starts with initial seeds (61360682,21556394).
+G4WT0 > --> Event 293 starts with initial seeds (84384476,26044185).
+G4WT0 > --> Event 294 starts with initial seeds (37882767,46210564).
+G4WT12 > --> Event 388 starts with initial seeds (96470675,60799041).
+G4WT30 > --> Event 257 starts with initial seeds (10653523,66230570).
+G4WT4 > --> Event 332 starts with initial seeds (31483816,34821111).
+G4WT30 > --> Event 258 starts with initial seeds (75596067,16504318).
+G4WT23 > --> Event 377 starts with initial seeds (89195254,58355747).
+G4WT26 > --> Event 361 starts with initial seeds (29393877,58805667).
+G4WT11 > --> Event 343 starts with initial seeds (95601473,42618969).
+G4WT23 > --> Event 378 starts with initial seeds (3568688,54272212).
+G4WT28 > --> Event 420 starts with initial seeds (50129321,22150631).
+G4WT31 > --> Event 425 starts with initial seeds (27540275,3090218).
+G4WT21 > --> Event 337 starts with initial seeds (55662069,90777699).
+G4WT26 > --> Event 362 starts with initial seeds (68813029,37851412).
+G4WT28 > --> Event 421 starts with initial seeds (6697763,40691).
+G4WT20 > --> Event 353 starts with initial seeds (61012261,63532400).
+G4WT8 > --> Event 430 starts with initial seeds (90372665,39127308).
+G4WT20 > --> Event 354 starts with initial seeds (30770366,53703875).
+G4WT20 > --> Event 435 starts with initial seeds (82687035,75444239).
+G4WT19 > --> Event 229 starts with initial seeds (73133848,70974552).
+G4WT20 > --> Event 436 starts with initial seeds (51796171,84983419).
+G4WT25 > --> Event 416 starts with initial seeds (96673062,49544786).
+G4WT25 > --> Event 417 starts with initial seeds (92391118,27993477).
+G4WT25 > --> Event 418 starts with initial seeds (11240805,26275926).
+G4WT2 > --> Event 372 starts with initial seeds (43551263,29316152).
+G4WT2 > --> Event 373 starts with initial seeds (14922142,71137927).
+G4WT15 > --> Event 254 starts with initial seeds (48509212,70297763).
+G4WT15 > --> Event 440 starts with initial seeds (6817383,89137856).
+G4WT9 > --> Event 401 starts with initial seeds (23389523,97710051).
+G4WT13 > --> Event 396 starts with initial seeds (94558217,32203020).
+G4WT2 > --> Event 374 starts with initial seeds (16610117,49760992).
+G4WT2 > --> Event 445 starts with initial seeds (24510745,91858263).
+G4WT11 > --> Event 344 starts with initial seeds (31132745,75865421).
+G4WT16 > --> Event 263 starts with initial seeds (42202667,8427732).
+G4WT24 > --> Event 450 starts with initial seeds (19942208,48919529).
+G4WT5 > --> Event 322 starts with initial seeds (12365446,28928166).
+G4WT5 > --> Event 323 starts with initial seeds (44460105,55175773).
+G4WT25 > --> Event 419 starts with initial seeds (35663393,4316183).
+G4WT25 > --> Event 455 starts with initial seeds (21111038,33886100).
+G4WT25 > --> Event 456 starts with initial seeds (66121183,9461599).
+G4WT21 > --> Event 338 starts with initial seeds (90991479,33804817).
+G4WT8 > --> Event 431 starts with initial seeds (42918360,27554655).
+G4WT8 > --> Event 432 starts with initial seeds (32789367,83811807).
+G4WT6 > --> Event 288 starts with initial seeds (10785288,64101204).
+G4WT2 > --> Event 446 starts with initial seeds (32817633,70067256).
+G4WT2 > --> Event 447 starts with initial seeds (18424212,61517821).
+G4WT18 > --> Event 329 starts with initial seeds (97442831,72862386).
+G4WT19 > --> Event 460 starts with initial seeds (2578709,81250068).
+G4WT19 > --> Event 461 starts with initial seeds (78641485,83100649).
+G4WT17 > --> Event 465 starts with initial seeds (46557802,40743985).
+G4WT5 > --> Event 324 starts with initial seeds (4064784,14021245).
+G4WT16 > --> Event 264 starts with initial seeds (88581565,6760087).
+G4WT19 > --> Event 462 starts with initial seeds (19595658,3760568).
+G4WT16 > --> Event 470 starts with initial seeds (81603544,29445177).
+G4WT16 > --> Event 471 starts with initial seeds (5144809,26086094).
+G4WT0 > --> Event 475 starts with initial seeds (33976556,18820189).
+G4WT29 > --> Event 480 starts with initial seeds (41234759,41653115).
+G4WT11 > --> Event 485 starts with initial seeds (40140812,69751703).
+G4WT12 > --> Event 389 starts with initial seeds (97353585,34118969).
+G4WT12 > --> Event 490 starts with initial seeds (96087084,54061038).
+G4WT11 > --> Event 486 starts with initial seeds (8854963,46362085).
+G4WT11 > --> Event 487 starts with initial seeds (44792038,71858781).
+G4WT21 > --> Event 339 starts with initial seeds (65801929,21910418).
+G4WT28 > --> Event 422 starts with initial seeds (84343142,84690688).
+G4WT29 > --> Event 481 starts with initial seeds (30249584,38315615).
+G4WT29 > --> Event 482 starts with initial seeds (11637147,65835265).
+G4WT19 > --> Event 463 starts with initial seeds (4430957,5814122).
+G4WT29 > --> Event 483 starts with initial seeds (38048700,53096982).
+G4WT29 > --> Event 484 starts with initial seeds (44292122,17189203).
+G4WT29 > --> Event 495 starts with initial seeds (44717097,27184728).
+G4WT9 > --> Event 402 starts with initial seeds (92762075,96452618).
+G4WT12 > --> Event 491 starts with initial seeds (91453438,49827825).
+G4WT2 > --> Event 448 starts with initial seeds (51604452,52604326).
+G4WT25 > --> Event 457 starts with initial seeds (75952805,59117628).
+G4WT31 > --> Event 426 starts with initial seeds (62937709,36498228).
+G4WT31 > --> Event 427 starts with initial seeds (60811973,51232259).
+G4WT14 > --> Event 412 starts with initial seeds (41884640,71353367).
+G4WT29 > --> Event 496 starts with initial seeds (4618649,4147053).
+G4WT15 > --> Event 441 starts with initial seeds (56968179,7034550).
+G4WT7 > --> Event 234 starts with initial seeds (3613743,64094826).
+G4WT15 > --> Event 442 starts with initial seeds (70483572,48348351).
+G4WT22 > --> Event 346 starts with initial seeds (2386052,45432124).
+G4WT1 > --> Event 384 starts with initial seeds (89700985,64139837).
+G4WT23 > --> Event 379 starts with initial seeds (56849886,73195729).
+G4WT21 > --> Event 500 starts with initial seeds (21056192,1842147).
+G4WT8 > --> Event 433 starts with initial seeds (80093018,16804327).
+G4WT8 > --> Event 434 starts with initial seeds (9628439,11909522).
+G4WT8 > --> Event 505 starts with initial seeds (66909834,71164599).
+G4WT22 > --> Event 347 starts with initial seeds (33825456,224105).
+G4WT20 > --> Event 437 starts with initial seeds (55709628,55408182).
+G4WT23 > --> Event 510 starts with initial seeds (99377466,53954414).
+G4WT3 > --> Event 307 starts with initial seeds (51339267,12225341).
+G4WT3 > --> Event 308 starts with initial seeds (34753677,20072457).
+G4WT1 > --> Event 515 starts with initial seeds (87240982,73918530).
+G4WT2 > --> Event 449 starts with initial seeds (78157245,47743757).
+G4WT1 > --> Event 516 starts with initial seeds (89028579,73421665).
+G4WT2 > --> Event 520 starts with initial seeds (52119497,88112970).
+G4WT10 > --> Event 407 starts with initial seeds (68285809,99845027).
+G4WT31 > --> Event 428 starts with initial seeds (78858230,75906554).
+G4WT12 > --> Event 492 starts with initial seeds (68748308,82394080).
+G4WT0 > --> Event 476 starts with initial seeds (2943570,69769096).
+G4WT25 > --> Event 458 starts with initial seeds (85307663,37909510).
+G4WT6 > --> Event 289 starts with initial seeds (54944151,33711425).
+G4WT6 > --> Event 525 starts with initial seeds (95002361,99816801).
+G4WT7 > --> Event 530 starts with initial seeds (20714136,50397344).
+G4WT26 > --> Event 363 starts with initial seeds (39845952,45073045).
+G4WT7 > --> Event 531 starts with initial seeds (28122783,59088637).
+G4WT7 > --> Event 532 starts with initial seeds (40679436,74919224).
+G4WT25 > --> Event 459 starts with initial seeds (22984326,18419757).
+G4WT7 > --> Event 533 starts with initial seeds (88238968,21213441).
+G4WT25 > --> Event 535 starts with initial seeds (91263746,37328707).
+G4WT13 > --> Event 397 starts with initial seeds (40575822,93056163).
+G4WT13 > --> Event 398 starts with initial seeds (39932662,36504692).
+G4WT11 > --> Event 488 starts with initial seeds (4682992,39789324).
+G4WT6 > --> Event 526 starts with initial seeds (1844845,32523447).
+G4WT0 > --> Event 477 starts with initial seeds (93261551,97532051).
+G4WT10 > --> Event 408 starts with initial seeds (91635933,8625883).
+G4WT13 > --> Event 399 starts with initial seeds (94971238,99395848).
+G4WT21 > --> Event 501 starts with initial seeds (23364242,40897831).
+G4WT17 > --> Event 466 starts with initial seeds (2387035,6045008).
+G4WT27 > --> Event 393 starts with initial seeds (41752797,42079859).
+G4WT24 > --> Event 451 starts with initial seeds (25879935,25193537).
+G4WT24 > --> Event 452 starts with initial seeds (1000210,12628).
+G4WT24 > --> Event 453 starts with initial seeds (17961086,1428079).
+G4WT7 > --> Event 534 starts with initial seeds (95376548,41511951).
+G4WT23 > --> Event 511 starts with initial seeds (51634109,56773367).
+G4WT23 > --> Event 512 starts with initial seeds (80686109,27960574).
+G4WT18 > --> Event 540 starts with initial seeds (56662444,81341759).
+G4WT7 > --> Event 545 starts with initial seeds (707682,27404294).
+G4WT4 > --> Event 333 starts with initial seeds (25240393,44727958).
+G4WT21 > --> Event 502 starts with initial seeds (56363615,47625894).
+G4WT21 > --> Event 503 starts with initial seeds (46825738,65444534).
+G4WT4 > --> Event 334 starts with initial seeds (74817426,46210311).
+G4WT21 > --> Event 504 starts with initial seeds (71728909,17560471).
+G4WT4 > --> Event 550 starts with initial seeds (15012724,9030493).
+G4WT11 > --> Event 489 starts with initial seeds (83884613,65896190).
+G4WT8 > --> Event 506 starts with initial seeds (93483152,6940192).
+G4WT2 > --> Event 521 starts with initial seeds (80400427,38306194).
+G4WT10 > --> Event 409 starts with initial seeds (21102518,10023134).
+G4WT10 > --> Event 555 starts with initial seeds (33349569,64114625).
+G4WT10 > --> Event 556 starts with initial seeds (63300579,43460939).
+G4WT10 > --> Event 557 starts with initial seeds (21215349,36814499).
+G4WT8 > --> Event 507 starts with initial seeds (92726956,47598766).
+G4WT8 > --> Event 508 starts with initial seeds (95011284,25848431).
+G4WT30 > --> Event 259 starts with initial seeds (51975085,42501132).
+G4WT9 > --> Event 403 starts with initial seeds (31242376,6716482).
+G4WT25 > --> Event 536 starts with initial seeds (89671581,8660705).
+G4WT25 > --> Event 537 starts with initial seeds (68285135,39051346).
+G4WT28 > --> Event 423 starts with initial seeds (27441170,53154104).
+G4WT1 > --> Event 517 starts with initial seeds (28993684,88715890).
+G4WT1 > --> Event 518 starts with initial seeds (1193952,67798153).
+G4WT24 > --> Event 454 starts with initial seeds (42138230,79827113).
+G4WT5 > --> Event 560 starts with initial seeds (97943297,77232494).
+G4WT5 > --> Event 561 starts with initial seeds (86331039,14450463).
+G4WT5 > --> Event 562 starts with initial seeds (70406477,92465309).
+G4WT1 > --> Event 519 starts with initial seeds (25206286,62056216).
+G4WT1 > --> Event 565 starts with initial seeds (96088019,62766412).
+G4WT25 > --> Event 538 starts with initial seeds (16866283,37471232).
+G4WT25 > --> Event 539 starts with initial seeds (25487979,2910097).
+G4WT10 > --> Event 558 starts with initial seeds (17582622,97147660).
+G4WT24 > --> Event 570 starts with initial seeds (47789958,83218187).
+G4WT24 > --> Event 571 starts with initial seeds (71931358,81710830).
+G4WT24 > --> Event 572 starts with initial seeds (80310918,59793335).
+G4WT22 > --> Event 348 starts with initial seeds (48827207,98738858).
+G4WT21 > --> Event 575 starts with initial seeds (52551065,67752716).
+G4WT7 > --> Event 546 starts with initial seeds (64903597,25308408).
+G4WT15 > --> Event 443 starts with initial seeds (78716912,88418514).
+G4WT7 > --> Event 547 starts with initial seeds (68518961,98207580).
+G4WT15 > --> Event 444 starts with initial seeds (38157140,22984546).
+G4WT6 > --> Event 527 starts with initial seeds (65903075,59232369).
+G4WT11 > --> Event 580 starts with initial seeds (80866782,97676868).
+G4WT22 > --> Event 349 starts with initial seeds (66336935,15865864).
+G4WT20 > --> Event 438 starts with initial seeds (87782846,49749779).
+G4WT22 > --> Event 585 starts with initial seeds (3661963,85752947).
+G4WT20 > --> Event 439 starts with initial seeds (73001817,12030479).
+G4WT14 > --> Event 413 starts with initial seeds (99039369,31961739).
+G4WT20 > --> Event 590 starts with initial seeds (4884447,74176992).
+G4WT17 > --> Event 467 starts with initial seeds (58075497,64634982).
+G4WT14 > --> Event 414 starts with initial seeds (87331087,17782870).
+G4WT20 > --> Event 591 starts with initial seeds (59480561,59828477).
+G4WT20 > --> Event 592 starts with initial seeds (85531319,9073253).
+G4WT4 > --> Event 551 starts with initial seeds (61345939,40270337).
+G4WT23 > --> Event 513 starts with initial seeds (60921430,76982889).
+G4WT31 > --> Event 429 starts with initial seeds (73627390,99526395).
+G4WT31 > --> Event 595 starts with initial seeds (89540441,33462464).
+G4WT27 > --> Event 394 starts with initial seeds (95093048,67031725).
+G4WT27 > --> Event 600 starts with initial seeds (4778857,77823983).
+G4WT3 > --> Event 309 starts with initial seeds (20927978,31035761).
+G4WT30 > --> Event 605 starts with initial seeds (98473953,9601193).
+G4WT1 > --> Event 566 starts with initial seeds (65008318,76385606).
+G4WT30 > --> Event 606 starts with initial seeds (80947168,86620687).
+G4WT3 > --> Event 610 starts with initial seeds (24046117,92583501).
+G4WT1 > --> Event 567 starts with initial seeds (91989620,86496749).
+G4WT30 > --> Event 607 starts with initial seeds (68271110,24373342).
+G4WT30 > --> Event 608 starts with initial seeds (28945158,81566057).
+G4WT3 > --> Event 611 starts with initial seeds (50783109,19520129).
+G4WT7 > --> Event 548 starts with initial seeds (22697929,52068671).
+G4WT10 > --> Event 559 starts with initial seeds (92636092,9791079).
+G4WT30 > --> Event 609 starts with initial seeds (72656507,23102782).
+G4WT29 > --> Event 497 starts with initial seeds (60033993,38962797).
+G4WT7 > --> Event 549 starts with initial seeds (60677761,36935406).
+G4WT0 > --> Event 478 starts with initial seeds (17363614,90707721).
+G4WT7 > --> Event 615 starts with initial seeds (86730031,2885931).
+G4WT4 > --> Event 552 starts with initial seeds (83657906,70845971).
+G4WT4 > --> Event 553 starts with initial seeds (33725566,71261846).
+G4WT3 > --> Event 612 starts with initial seeds (91322533,93812652).
+G4WT3 > --> Event 613 starts with initial seeds (56703367,40313666).
+G4WT24 > --> Event 573 starts with initial seeds (59847616,21850832).
+G4WT28 > --> Event 424 starts with initial seeds (87090119,5005225).
+G4WT26 > --> Event 364 starts with initial seeds (13903087,59082120).
+G4WT16 > --> Event 472 starts with initial seeds (39229373,49442784).
+G4WT31 > --> Event 596 starts with initial seeds (47126575,95851747).
+G4WT26 > --> Event 620 starts with initial seeds (53259744,77307964).
+G4WT31 > --> Event 597 starts with initial seeds (18636424,24138299).
+G4WT26 > --> Event 621 starts with initial seeds (96815171,36861878).
+G4WT12 > --> Event 493 starts with initial seeds (52399693,70596377).
+G4WT19 > --> Event 464 starts with initial seeds (90407046,6924037).
+G4WT2 > --> Event 522 starts with initial seeds (62160923,58293620).
+G4WT4 > --> Event 554 starts with initial seeds (21898137,52047628).
+G4WT4 > --> Event 625 starts with initial seeds (54361774,31734829).
+G4WT24 > --> Event 574 starts with initial seeds (57633634,30262144).
+G4WT2 > --> Event 523 starts with initial seeds (66805336,24518921).
+G4WT2 > --> Event 524 starts with initial seeds (99173193,24293269).
+G4WT1 > --> Event 568 starts with initial seeds (92921483,47035275).
+G4WT13 > --> Event 630 starts with initial seeds (40481515,37318730).
+G4WT13 > --> Event 631 starts with initial seeds (18200318,60700643).
+G4WT7 > --> Event 616 starts with initial seeds (19152113,34368852).
+G4WT14 > --> Event 635 starts with initial seeds (53037326,75214279).
+G4WT26 > --> Event 622 starts with initial seeds (30659605,45480966).
+G4WT21 > --> Event 576 starts with initial seeds (2981779,40144748).
+G4WT12 > --> Event 494 starts with initial seeds (79163423,34388636).
+G4WT6 > --> Event 528 starts with initial seeds (26891171,22282499).
+G4WT29 > --> Event 498 starts with initial seeds (36896021,90116248).
+G4WT29 > --> Event 499 starts with initial seeds (11942794,3963255).
+G4WT20 > --> Event 593 starts with initial seeds (92126125,39454831).
+G4WT29 > --> Event 640 starts with initial seeds (67819172,58621324).
+G4WT1 > --> Event 569 starts with initial seeds (12802902,81221226).
+G4WT31 > --> Event 598 starts with initial seeds (76610459,54935034).
+G4WT21 > --> Event 577 starts with initial seeds (84452147,58519472).
+G4WT19 > --> Event 645 starts with initial seeds (73498451,71800789).
+G4WT1 > --> Event 650 starts with initial seeds (44687812,12620478).
+G4WT17 > --> Event 468 starts with initial seeds (82368079,10817943).
+G4WT1 > --> Event 651 starts with initial seeds (86569408,52333902).
+G4WT20 > --> Event 594 starts with initial seeds (12971869,69890628).
+G4WT1 > --> Event 652 starts with initial seeds (51175838,61930425).
+G4WT3 > --> Event 614 starts with initial seeds (19401732,98450928).
+G4WT3 > --> Event 655 starts with initial seeds (61670331,27471455).
+G4WT3 > --> Event 656 starts with initial seeds (28925325,31130920).
+G4WT13 > --> Event 632 starts with initial seeds (99822834,28060016).
+G4WT15 > --> Event 660 starts with initial seeds (75169356,57834747).
+G4WT15 > --> Event 661 starts with initial seeds (50438473,7266818).
+G4WT20 > --> Event 665 starts with initial seeds (5411510,97484059).
+G4WT31 > --> Event 599 starts with initial seeds (70735502,29335354).
+G4WT13 > --> Event 633 starts with initial seeds (59581456,28872105).
+G4WT10 > --> Event 670 starts with initial seeds (88661277,54934474).
+G4WT10 > --> Event 671 starts with initial seeds (46316999,72304909).
+G4WT11 > --> Event 581 starts with initial seeds (88142022,20352778).
+G4WT4 > --> Event 626 starts with initial seeds (69146879,97862543).
+G4WT30 > --> Event 675 starts with initial seeds (90381653,56147032).
+G4WT30 > --> Event 676 starts with initial seeds (8738574,79254053).
+G4WT30 > --> Event 677 starts with initial seeds (71419329,33453770).
+G4WT27 > --> Event 601 starts with initial seeds (98359215,83058856).
+G4WT13 > --> Event 634 starts with initial seeds (5547819,13418830).
+G4WT9 > --> Event 404 starts with initial seeds (85095521,38272229).
+G4WT0 > --> Event 479 starts with initial seeds (51800212,37678946).
+G4WT0 > --> Event 680 starts with initial seeds (30865981,311684).
+G4WT0 > --> Event 681 starts with initial seeds (90898509,66086389).
+G4WT0 > --> Event 682 starts with initial seeds (56701144,62041793).
+G4WT5 > --> Event 563 starts with initial seeds (93055873,19080569).
+G4WT3 > --> Event 657 starts with initial seeds (35137726,56424143).
+G4WT3 > --> Event 658 starts with initial seeds (11992382,24102799).
+G4WT0 > --> Event 683 starts with initial seeds (29018622,60678053).
+G4WT0 > --> Event 684 starts with initial seeds (54618298,10898562).
+G4WT24 > --> Event 685 starts with initial seeds (73997578,64751824).
+G4WT24 > --> Event 686 starts with initial seeds (39758768,99864051).
+G4WT5 > --> Event 564 starts with initial seeds (76345,25788478).
+G4WT6 > --> Event 529 starts with initial seeds (15244889,28001775).
+G4WT21 > --> Event 578 starts with initial seeds (90146354,67624484).
+G4WT26 > --> Event 623 starts with initial seeds (87780961,24268101).
+G4WT26 > --> Event 624 starts with initial seeds (83613302,83924148).
+G4WT1 > --> Event 653 starts with initial seeds (28688363,50186287).
+G4WT1 > --> Event 654 starts with initial seeds (68297511,13876380).
+G4WT27 > --> Event 602 starts with initial seeds (6981587,19274584).
+G4WT27 > --> Event 603 starts with initial seeds (55169223,15285813).
+G4WT19 > --> Event 646 starts with initial seeds (34230961,317089).
+G4WT22 > --> Event 586 starts with initial seeds (68582283,39316055).
+G4WT22 > --> Event 587 starts with initial seeds (3865716,4355487).
+G4WT26 > --> Event 690 starts with initial seeds (31497612,77410204).
+G4WT19 > --> Event 647 starts with initial seeds (61332128,93273531).
+G4WT22 > --> Event 588 starts with initial seeds (50894986,18205356).
+G4WT26 > --> Event 691 starts with initial seeds (19033426,78991641).
+G4WT3 > --> Event 659 starts with initial seeds (53832104,82258774).
+G4WT4 > --> Event 627 starts with initial seeds (96681611,39710080).
+G4WT13 > --> Event 695 starts with initial seeds (31085900,90127303).
+G4WT19 > --> Event 648 starts with initial seeds (14572604,13119597).
+G4WT2 > --> Event 700 starts with initial seeds (5701446,9235619).
+G4WT10 > --> Event 672 starts with initial seeds (18182559,68530790).
+G4WT8 > --> Event 509 starts with initial seeds (64935899,19908605).
+G4WT8 > --> Event 705 starts with initial seeds (23317612,42928179).
+G4WT10 > --> Event 673 starts with initial seeds (5122235,92246916).
+G4WT10 > --> Event 674 starts with initial seeds (9229022,72395416).
+G4WT0 > --> Event 710 starts with initial seeds (34949568,61152642).
+G4WT0 > --> Event 711 starts with initial seeds (88306188,6899534).
+G4WT27 > --> Event 604 starts with initial seeds (89751568,99376566).
+G4WT12 > --> Event 715 starts with initial seeds (19892909,40756858).
+G4WT27 > --> Event 720 starts with initial seeds (82886967,19062944).
+G4WT27 > --> Event 721 starts with initial seeds (23712036,85949297).
+G4WT12 > --> Event 716 starts with initial seeds (20789921,46249401).
+G4WT9 > --> Event 725 starts with initial seeds (31425284,63432415).
+G4WT15 > --> Event 662 starts with initial seeds (11949819,24345426).
+G4WT15 > --> Event 663 starts with initial seeds (92526857,49192904).
+G4WT15 > --> Event 664 starts with initial seeds (58153359,55053412).
+G4WT15 > --> Event 730 starts with initial seeds (86326504,92617986).
+G4WT14 > --> Event 636 starts with initial seeds (45342160,44637201).
+G4WT14 > --> Event 637 starts with initial seeds (86473651,24891534).
+G4WT0 > --> Event 712 starts with initial seeds (15948344,44971919).
+G4WT0 > --> Event 713 starts with initial seeds (51092916,14981460).
+G4WT17 > --> Event 469 starts with initial seeds (24893297,33349720).
+G4WT7 > --> Event 617 starts with initial seeds (94100826,95242479).
+G4WT7 > --> Event 618 starts with initial seeds (70966933,44367765).
+G4WT22 > --> Event 589 starts with initial seeds (25376834,57578987).
+G4WT10 > --> Event 735 starts with initial seeds (60529604,93573048).
+G4WT31 > --> Event 740 starts with initial seeds (63219511,90721678).
+G4WT9 > --> Event 726 starts with initial seeds (61924757,16913498).
+G4WT9 > --> Event 727 starts with initial seeds (92508165,54190987).
+G4WT16 > --> Event 473 starts with initial seeds (70887957,71041139).
+G4WT25 > --> Event 745 starts with initial seeds (79308610,76954960).
+G4WT19 > --> Event 649 starts with initial seeds (76733434,50335552).
+G4WT23 > --> Event 514 starts with initial seeds (81777145,37025408).
+G4WT0 > --> Event 714 starts with initial seeds (15356065,72604662).
+G4WT22 > --> Event 750 starts with initial seeds (14189805,55602402).
+G4WT13 > --> Event 696 starts with initial seeds (25312015,39550013).
+G4WT14 > --> Event 638 starts with initial seeds (5674024,24122788).
+G4WT28 > --> Event 755 starts with initial seeds (7046296,99496078).
+G4WT20 > --> Event 666 starts with initial seeds (1522517,14505039).
+G4WT1 > --> Event 760 starts with initial seeds (84142147,88328558).
+G4WT20 > --> Event 667 starts with initial seeds (93393406,70289171).
+G4WT1 > --> Event 761 starts with initial seeds (86003375,43355924).
+G4WT25 > --> Event 746 starts with initial seeds (90473702,19061513).
+G4WT25 > --> Event 747 starts with initial seeds (65594401,8994802).
+G4WT12 > --> Event 717 starts with initial seeds (23394671,62965270).
+G4WT24 > --> Event 687 starts with initial seeds (40737183,28100777).
+G4WT28 > --> Event 756 starts with initial seeds (54197770,34963428).
+G4WT22 > --> Event 751 starts with initial seeds (32788582,69187997).
+G4WT23 > --> Event 765 starts with initial seeds (93780693,45351152).
+G4WT23 > --> Event 766 starts with initial seeds (44847380,39264174).
+G4WT24 > --> Event 688 starts with initial seeds (17572033,55566003).
+G4WT4 > --> Event 628 starts with initial seeds (71774573,76050039).
+G4WT24 > --> Event 689 starts with initial seeds (60809291,11237151).
+G4WT26 > --> Event 692 starts with initial seeds (29354554,12345689).
+G4WT13 > --> Event 697 starts with initial seeds (33005468,166544).
+G4WT4 > --> Event 629 starts with initial seeds (8347745,67780799).
+G4WT31 > --> Event 741 starts with initial seeds (57498050,52287643).
+G4WT12 > --> Event 718 starts with initial seeds (29534998,47925819).
+G4WT7 > --> Event 619 starts with initial seeds (60224248,21936308).
+G4WT23 > --> Event 767 starts with initial seeds (32869375,30798300).
+G4WT8 > --> Event 706 starts with initial seeds (50437362,84796170).
+G4WT8 > --> Event 707 starts with initial seeds (87032872,97630562).
+G4WT4 > --> Event 770 starts with initial seeds (62983846,64161419).
+G4WT4 > --> Event 771 starts with initial seeds (27992851,26088028).
+G4WT18 > --> Event 541 starts with initial seeds (2071176,70518376).
+G4WT10 > --> Event 736 starts with initial seeds (49451363,22724030).
+G4WT4 > --> Event 772 starts with initial seeds (97485006,13375751).
+G4WT20 > --> Event 668 starts with initial seeds (80586856,32388790).
+G4WT28 > --> Event 757 starts with initial seeds (79220054,97108242).
+G4WT13 > --> Event 698 starts with initial seeds (88835684,30752680).
+G4WT23 > --> Event 768 starts with initial seeds (4569782,96682212).
+G4WT23 > --> Event 769 starts with initial seeds (66875420,33362445).
+G4WT30 > --> Event 678 starts with initial seeds (20593638,74666362).
+G4WT11 > --> Event 582 starts with initial seeds (36802093,36443313).
+G4WT23 > --> Event 775 starts with initial seeds (16201427,92966308).
+G4WT11 > --> Event 583 starts with initial seeds (60370196,64122082).
+G4WT4 > --> Event 773 starts with initial seeds (66083954,8218688).
+G4WT4 > --> Event 774 starts with initial seeds (16734474,50305411).
+G4WT24 > --> Event 780 starts with initial seeds (7894910,18392766).
+G4WT2 > --> Event 701 starts with initial seeds (80371384,11086715).
+G4WT2 > --> Event 702 starts with initial seeds (99291211,32044576).
+G4WT19 > --> Event 785 starts with initial seeds (12748992,43720868).
+G4WT19 > --> Event 786 starts with initial seeds (65707825,25521181).
+G4WT19 > --> Event 787 starts with initial seeds (64716484,29175871).
+G4WT21 > --> Event 579 starts with initial seeds (43931452,96352214).
+G4WT14 > --> Event 639 starts with initial seeds (66025956,49338082).
+G4WT14 > --> Event 790 starts with initial seeds (42465131,3727417).
+G4WT29 > --> Event 641 starts with initial seeds (99979671,33009937).
+G4WT7 > --> Event 795 starts with initial seeds (85162980,74910007).
+G4WT12 > --> Event 719 starts with initial seeds (4006230,85355619).
+G4WT27 > --> Event 722 starts with initial seeds (7225883,84048390).
+G4WT6 > --> Event 800 starts with initial seeds (9085345,68518034).
+G4WT8 > --> Event 708 starts with initial seeds (92620659,58340435).
+G4WT22 > --> Event 752 starts with initial seeds (26356593,64879714).
+G4WT17 > --> Event 805 starts with initial seeds (64310889,45454924).
+G4WT0 > --> Event 810 starts with initial seeds (58125649,70950710).
+G4WT17 > --> Event 806 starts with initial seeds (7938592,45434363).
+G4WT16 > --> Event 474 starts with initial seeds (22923424,69067461).
+G4WT16 > --> Event 815 starts with initial seeds (90137383,37432613).
+G4WT9 > --> Event 728 starts with initial seeds (87238792,40074412).
+G4WT9 > --> Event 729 starts with initial seeds (85496529,3564535).
+G4WT9 > --> Event 820 starts with initial seeds (36025430,76837010).
+G4WT9 > --> Event 821 starts with initial seeds (8166531,24289021).
+G4WT3 > --> Event 825 starts with initial seeds (44152097,12216980).
+G4WT3 > --> Event 826 starts with initial seeds (11080886,97386130).
+G4WT13 > --> Event 699 starts with initial seeds (19009510,80635393).
+G4WT18 > --> Event 542 starts with initial seeds (45716024,46384339).
+G4WT5 > --> Event 830 starts with initial seeds (80120165,64558847).
+G4WT5 > --> Event 831 starts with initial seeds (51866950,20769252).
+G4WT10 > --> Event 737 starts with initial seeds (89451766,11799747).
+G4WT0 > --> Event 811 starts with initial seeds (43749257,53470758).
+G4WT0 > --> Event 812 starts with initial seeds (23600667,76260451).
+G4WT15 > --> Event 731 starts with initial seeds (33632418,94951656).
+G4WT15 > --> Event 732 starts with initial seeds (96913694,64254288).
+G4WT20 > --> Event 669 starts with initial seeds (92732677,53510334).
+G4WT0 > --> Event 813 starts with initial seeds (1601130,50916962).
+G4WT20 > --> Event 835 starts with initial seeds (24248873,14093248).
+G4WT20 > --> Event 836 starts with initial seeds (22756974,19270717).
+G4WT16 > --> Event 816 starts with initial seeds (93915269,79579324).
+G4WT15 > --> Event 733 starts with initial seeds (88641712,99876006).
+G4WT15 > --> Event 734 starts with initial seeds (86793248,48064382).
+G4WT19 > --> Event 788 starts with initial seeds (3773476,72373770).
+G4WT21 > --> Event 840 starts with initial seeds (97029152,56477318).
+G4WT21 > --> Event 841 starts with initial seeds (15202395,15408506).
+G4WT13 > --> Event 845 starts with initial seeds (21513123,85278414).
+G4WT21 > --> Event 842 starts with initial seeds (2756228,73036480).
+G4WT21 > --> Event 843 starts with initial seeds (44677731,56620601).
+G4WT21 > --> Event 844 starts with initial seeds (18335194,43374976).
+G4WT21 > --> Event 850 starts with initial seeds (41868817,52534766).
+G4WT21 > --> Event 851 starts with initial seeds (19523713,33775475).
+G4WT6 > --> Event 801 starts with initial seeds (32984374,68433766).
+G4WT6 > --> Event 802 starts with initial seeds (25821251,91287769).
+G4WT21 > --> Event 852 starts with initial seeds (41335633,1116757).
+G4WT3 > --> Event 827 starts with initial seeds (77899400,57428055).
+G4WT1 > --> Event 762 starts with initial seeds (91440681,74805373).
+G4WT1 > --> Event 763 starts with initial seeds (21217999,42532248).
+G4WT21 > --> Event 853 starts with initial seeds (91491645,6795080).
+G4WT29 > --> Event 642 starts with initial seeds (97565236,88347740).
+G4WT13 > --> Event 846 starts with initial seeds (2781700,78873681).
+G4WT12 > --> Event 855 starts with initial seeds (67987015,89440305).
+G4WT12 > --> Event 856 starts with initial seeds (63098091,28601553).
+G4WT30 > --> Event 679 starts with initial seeds (68924543,55462457).
+G4WT4 > --> Event 860 starts with initial seeds (9982461,84638327).
+G4WT31 > --> Event 742 starts with initial seeds (49254705,42511068).
+G4WT30 > --> Event 865 starts with initial seeds (68396067,51511103).
+G4WT21 > --> Event 854 starts with initial seeds (88036876,84254342).
+G4WT21 > --> Event 870 starts with initial seeds (53170565,84036340).
+G4WT24 > --> Event 781 starts with initial seeds (31816821,22012188).
+G4WT26 > --> Event 693 starts with initial seeds (66652231,23334703).
+G4WT26 > --> Event 694 starts with initial seeds (25393597,61972743).
+G4WT24 > --> Event 782 starts with initial seeds (88174253,983303).
+G4WT26 > --> Event 875 starts with initial seeds (27816943,77318003).
+G4WT0 > --> Event 814 starts with initial seeds (63273581,61490173).
+G4WT17 > --> Event 807 starts with initial seeds (36942511,69638319).
+G4WT30 > --> Event 866 starts with initial seeds (32279942,93888220).
+G4WT10 > --> Event 738 starts with initial seeds (39805711,45141979).
+G4WT10 > --> Event 739 starts with initial seeds (49447238,94257616).
+G4WT10 > --> Event 880 starts with initial seeds (525754,38540087).
+G4WT27 > --> Event 723 starts with initial seeds (61483145,83156234).
+G4WT25 > --> Event 748 starts with initial seeds (1815620,78511815).
+G4WT11 > --> Event 584 starts with initial seeds (23698768,95854700).
+G4WT8 > --> Event 709 starts with initial seeds (56608523,1035491).
+G4WT2 > --> Event 703 starts with initial seeds (4177647,36009258).
+G4WT26 > --> Event 876 starts with initial seeds (51461405,89367287).
+G4WT26 > --> Event 877 starts with initial seeds (57483225,80845679).
+G4WT6 > --> Event 803 starts with initial seeds (62408347,82280331).
+G4WT6 > --> Event 804 starts with initial seeds (98724421,57398289).
+G4WT19 > --> Event 789 starts with initial seeds (59501924,99834002).
+G4WT4 > --> Event 861 starts with initial seeds (78427222,6752059).
+G4WT7 > --> Event 796 starts with initial seeds (59947475,33624012).
+G4WT14 > --> Event 791 starts with initial seeds (16217891,76136686).
+G4WT27 > --> Event 724 starts with initial seeds (29814934,22830475).
+G4WT27 > --> Event 885 starts with initial seeds (3468251,77416921).
+G4WT28 > --> Event 758 starts with initial seeds (92495251,3676939).
+G4WT25 > --> Event 749 starts with initial seeds (59179892,24593958).
+G4WT28 > --> Event 759 starts with initial seeds (78463271,86860203).
+G4WT4 > --> Event 862 starts with initial seeds (97304176,45647722).
+G4WT25 > --> Event 890 starts with initial seeds (20605763,62849012).
+G4WT27 > --> Event 886 starts with initial seeds (18797397,52640255).
+G4WT5 > --> Event 832 starts with initial seeds (58255004,58152203).
+G4WT17 > --> Event 808 starts with initial seeds (8188019,51085589).
+G4WT7 > --> Event 797 starts with initial seeds (71387559,63742924).
+G4WT21 > --> Event 871 starts with initial seeds (10801590,93027804).
+G4WT21 > --> Event 872 starts with initial seeds (42436148,43884604).
+G4WT16 > --> Event 817 starts with initial seeds (22681202,99996893).
+G4WT31 > --> Event 743 starts with initial seeds (7635467,75387855).
+G4WT13 > --> Event 847 starts with initial seeds (97724858,80016779).
+G4WT0 > --> Event 895 starts with initial seeds (66077845,47894456).
+G4WT28 > --> Event 900 starts with initial seeds (58247577,46308557).
+G4WT8 > --> Event 905 starts with initial seeds (11244666,38330891).
+G4WT16 > --> Event 818 starts with initial seeds (53998587,46897349).
+G4WT4 > --> Event 863 starts with initial seeds (62625416,74101062).
+G4WT4 > --> Event 864 starts with initial seeds (67420380,78309818).
+G4WT2 > --> Event 704 starts with initial seeds (51550672,37333162).
+G4WT23 > --> Event 776 starts with initial seeds (75804195,99498928).
+G4WT17 > --> Event 809 starts with initial seeds (38510193,37260659).
+G4WT23 > --> Event 777 starts with initial seeds (77771568,45063891).
+G4WT17 > --> Event 910 starts with initial seeds (87449219,3269373).
+G4WT19 > --> Event 915 starts with initial seeds (21067232,99404886).
+G4WT19 > --> Event 916 starts with initial seeds (80843948,94580891).
+G4WT24 > --> Event 783 starts with initial seeds (80864453,70116402).
+G4WT21 > --> Event 873 starts with initial seeds (41281534,73857219).
+G4WT21 > --> Event 874 starts with initial seeds (92916200,40445524).
+G4WT21 > --> Event 920 starts with initial seeds (17306934,76791482).
+G4WT14 > --> Event 792 starts with initial seeds (90868281,34415184).
+G4WT14 > --> Event 793 starts with initial seeds (73517567,61436458).
+G4WT19 > --> Event 917 starts with initial seeds (91459,99654374).
+G4WT14 > --> Event 794 starts with initial seeds (71382037,32702931).
+G4WT22 > --> Event 753 starts with initial seeds (72359332,72938057).
+G4WT17 > --> Event 911 starts with initial seeds (32859531,57515643).
+G4WT18 > --> Event 543 starts with initial seeds (81600893,6347098).
+G4WT19 > --> Event 918 starts with initial seeds (31461323,85641810).
+G4WT6 > --> Event 925 starts with initial seeds (46875512,99130778).
+G4WT21 > --> Event 921 starts with initial seeds (48490758,57358774).
+G4WT10 > --> Event 881 starts with initial seeds (99458755,3187928).
+G4WT21 > --> Event 922 starts with initial seeds (7107780,30564571).
+G4WT5 > --> Event 833 starts with initial seeds (37177624,71559523).
+G4WT14 > --> Event 930 starts with initial seeds (73327545,1495291).
+G4WT9 > --> Event 822 starts with initial seeds (90816324,34771130).
+G4WT30 > --> Event 867 starts with initial seeds (27099955,3263091).
+G4WT31 > --> Event 744 starts with initial seeds (92521941,33609737).
+G4WT7 > --> Event 798 starts with initial seeds (61612588,76035924).
+G4WT26 > --> Event 878 starts with initial seeds (56794245,2342567).
+G4WT11 > --> Event 935 starts with initial seeds (41522414,11778106).
+G4WT11 > --> Event 936 starts with initial seeds (13269613,31533170).
+G4WT20 > --> Event 837 starts with initial seeds (87479664,30174225).
+G4WT29 > --> Event 643 starts with initial seeds (13685893,14142740).
+G4WT6 > --> Event 926 starts with initial seeds (71216468,57071635).
+G4WT16 > --> Event 819 starts with initial seeds (6345547,65121194).
+G4WT6 > --> Event 927 starts with initial seeds (81952327,43750487).
+G4WT3 > --> Event 828 starts with initial seeds (72689254,55562208).
+G4WT19 > --> Event 919 starts with initial seeds (63173440,19253352).
+G4WT28 > --> Event 901 starts with initial seeds (49268356,64818054).
+G4WT15 > --> Event 940 starts with initial seeds (68539772,3361836).
+G4WT15 > --> Event 941 starts with initial seeds (78429092,68893622).
+G4WT15 > --> Event 942 starts with initial seeds (777010,57340493).
+G4WT13 > --> Event 848 starts with initial seeds (41908019,43861217).
+G4WT15 > --> Event 943 starts with initial seeds (29003645,25106859).
+G4WT25 > --> Event 891 starts with initial seeds (70939811,44828202).
+G4WT17 > --> Event 912 starts with initial seeds (50087187,99206518).
+G4WT16 > --> Event 945 starts with initial seeds (29460765,70485964).
+G4WT19 > --> Event 950 starts with initial seeds (73539132,38247203).
+G4WT19 > --> Event 951 starts with initial seeds (36462771,41107695).
+G4WT19 > --> Event 952 starts with initial seeds (59321714,92748844).
+G4WT21 > --> Event 923 starts with initial seeds (60108967,98757907).
+G4WT30 > --> Event 868 starts with initial seeds (85522125,50046099).
+G4WT2 > --> Event 955 starts with initial seeds (33199672,61100289).
+G4WT1 > --> Event 764 starts with initial seeds (99099186,85685834).
+G4WT1 > --> Event 960 starts with initial seeds (45362660,68202871).
+G4WT1 > --> Event 961 starts with initial seeds (53078429,20340812).
+G4WT1 > --> Event 962 starts with initial seeds (1110157,830485).
+G4WT20 > --> Event 838 starts with initial seeds (8046769,89114505).
+G4WT20 > --> Event 839 starts with initial seeds (97069103,30662668).
+G4WT26 > --> Event 879 starts with initial seeds (38054857,38490680).
+G4WT20 > --> Event 965 starts with initial seeds (25462888,98972007).
+G4WT26 > --> Event 970 starts with initial seeds (87817513,41941876).
+G4WT2 > --> Event 956 starts with initial seeds (8510300,48702388).
+G4WT14 > --> Event 931 starts with initial seeds (53415139,15424728).
+G4WT14 > --> Event 932 starts with initial seeds (65327049,17697195).
+G4WT23 > --> Event 778 starts with initial seeds (77255205,70921190).
+G4WT0 > --> Event 896 starts with initial seeds (73158332,64705559).
+G4WT6 > --> Event 928 starts with initial seeds (74891802,89097271).
+G4WT2 > --> Event 957 starts with initial seeds (24807375,7085187).
+G4WT4 > --> Event 975 starts with initial seeds (78910538,20722136).
+G4WT2 > --> Event 958 starts with initial seeds (38798092,42288839).
+G4WT8 > --> Event 906 starts with initial seeds (34990333,25368311).
+G4WT2 > --> Event 959 starts with initial seeds (76000558,67794105).
+G4WT27 > --> Event 887 starts with initial seeds (60613138,23636330).
+G4WT8 > --> Event 907 starts with initial seeds (93852775,90441998).
+G4WT11 > --> Event 937 starts with initial seeds (57646008,39864065).
+G4WT3 > --> Event 829 starts with initial seeds (38680606,16950984).
+G4WT6 > --> Event 929 starts with initial seeds (45675575,55655239).
+G4WT29 > --> Event 644 starts with initial seeds (4239221,26535092).
+G4WT3 > --> Event 980 starts with initial seeds (54752435,43666583).
+G4WT6 > --> Event 985 starts with initial seeds (72476391,24384660).
+G4WT6 > --> Event 986 starts with initial seeds (19670860,59573824).
+G4WT7 > --> Event 799 starts with initial seeds (76952208,97267854).
+G4WT5 > --> Event 834 starts with initial seeds (88505554,37428776).
+G4WT7 > --> Event 990 starts with initial seeds (27240838,87460749).
+G4WT7 > --> Event 991 starts with initial seeds (72782191,2884890).
+G4WT7 > --> Event 992 starts with initial seeds (60946206,47358620).
+G4WT18 > --> Event 544 starts with initial seeds (41035751,12682069).
+G4WT8 > --> Event 908 starts with initial seeds (81423451,59700664).
+G4WT12 > --> Event 857 starts with initial seeds (93502070,54142073).
+G4WT13 > --> Event 849 starts with initial seeds (73603643,12580692).
+G4WT14 > --> Event 933 starts with initial seeds (32114043,83275102).
+G4WT22 > --> Event 754 starts with initial seeds (13485423,31420049).
+G4WT14 > --> Event 934 starts with initial seeds (61444365,43984118).
+G4WT22 > --> Event 995 starts with initial seeds (39759463,69946183).
+G4WT14 > Thread-local run terminated.
+G4WT14 > Run Summary
+G4WT14 >   Number of events processed : 35
+G4WT14 >   User=186.910000s Real=5.880053s Sys=0.690000s [Cpu=3190.4%]
+G4WT18 > Thread-local run terminated.
+G4WT18 > Run Summary
+G4WT18 >   Number of events processed : 25
+G4WT18 >   User=187.560000s Real=5.901876s Sys=0.710000s [Cpu=3190.0%]
+G4WT19 > --> Event 953 starts with initial seeds (15023257,24442760).
+G4WT21 > --> Event 924 starts with initial seeds (77939554,52172682).
+G4WT23 > --> Event 779 starts with initial seeds (30737037,42869968).
+G4WT4 > --> Event 976 starts with initial seeds (96312297,94193787).
+G4WT28 > --> Event 902 starts with initial seeds (244653,94871927).
+G4WT4 > --> Event 977 starts with initial seeds (25209260,93954881).
+G4WT4 > --> Event 978 starts with initial seeds (43667141,2285007).
+G4WT23 > Thread-local run terminated.
+G4WT23 > Run Summary
+G4WT23 >   Number of events processed : 35
+G4WT23 >   User=190.040000s Real=6.002165s Sys=0.790000s [Cpu=3179.4%]
+G4WT4 > --> Event 979 starts with initial seeds (80079406,92269592).
+G4WT16 > --> Event 946 starts with initial seeds (69217857,94224166).
+G4WT1 > --> Event 963 starts with initial seeds (62293798,33467890).
+G4WT1 > --> Event 964 starts with initial seeds (43391051,52344916).
+G4WT16 > --> Event 947 starts with initial seeds (92827905,57569842).
+G4WT24 > --> Event 784 starts with initial seeds (90828344,97612934).
+G4WT11 > --> Event 938 starts with initial seeds (49923377,50934269).
 G4WT1 > Thread-local run terminated.
 G4WT1 > Run Summary
-G4WT1 >   Number of events processed : 4
-G4WT1 >   User=4.530000s Real=2.267260s Sys=0.000000s [Cpu=199.8%]
-G4WT1 > ... write file : plz_work_kthxbai_t1.root - done
-G4WT1 > ... close file : plz_work_kthxbai_t1.root - done
-G4WT0 > --> Event 9 starts with initial seeds (85559589,66819398).
+G4WT1 >   Number of events processed : 40
+G4WT1 >   User=191.240000s Real=6.027656s Sys=0.750000s [Cpu=3185.2%]
+G4WT30 > --> Event 869 starts with initial seeds (27781299,48222371).
+G4WT22 > --> Event 996 starts with initial seeds (96522701,68628143).
+G4WT4 > Thread-local run terminated.
+G4WT4 > Run Summary
+G4WT4 >   Number of events processed : 40
+G4WT4 >   User=191.810000s Real=6.048554s Sys=0.750000s [Cpu=3183.6%]
+G4WT22 > --> Event 997 starts with initial seeds (78894274,46770407).
+G4WT10 > --> Event 882 starts with initial seeds (77671570,34446558).
+G4WT21 > Thread-local run terminated.
+G4WT21 > Run Summary
+G4WT21 >   Number of events processed : 40
+G4WT21 >   User=193.940000s Real=6.124554s Sys=0.710000s [Cpu=3178.2%]
+G4WT10 > --> Event 883 starts with initial seeds (43950160,58074633).
+G4WT2 > Thread-local run terminated.
+G4WT2 > Run Summary
+G4WT2 >   Number of events processed : 40
+G4WT2 >   User=194.480000s Real=6.145063s Sys=0.740000s [Cpu=3176.9%]
+G4WT10 > --> Event 884 starts with initial seeds (59989799,99771822).
+G4WT10 > Thread-local run terminated.
+G4WT10 > Run Summary
+G4WT10 >   Number of events processed : 35
+G4WT10 >   User=194.480000s Real=6.145727s Sys=0.720000s [Cpu=3176.2%]
+G4WT25 > --> Event 892 starts with initial seeds (61411493,84165855).
+G4WT15 > --> Event 944 starts with initial seeds (85770772,88528781).
+G4WT8 > --> Event 909 starts with initial seeds (84700407,42324377).
+G4WT8 > Thread-local run terminated.
+G4WT8 > Run Summary
+G4WT8 >   Number of events processed : 40
+G4WT8 >   User=194.970000s Real=6.177168s Sys=0.780000s [Cpu=3168.9%]
+G4WT24 > Thread-local run terminated.
+G4WT24 > Run Summary
+G4WT24 >   Number of events processed : 25
+G4WT24 >   User=195.200000s Real=6.174862s Sys=0.740000s [Cpu=3173.2%]
+G4WT22 > --> Event 998 starts with initial seeds (66509719,66851151).
+G4WT13 > Thread-local run terminated.
+G4WT13 > Run Summary
+G4WT13 >   Number of events processed : 25
+G4WT13 >   User=195.310000s Real=6.180286s Sys=0.720000s [Cpu=3171.9%]
+G4WT22 > --> Event 999 starts with initial seeds (50966196,97960425).
+G4WT9 > --> Event 823 starts with initial seeds (81595899,52255300).
+G4WT27 > --> Event 888 starts with initial seeds (55449437,3080793).
+G4WT27 > --> Event 889 starts with initial seeds (78236445,93003798).
+G4WT27 > Thread-local run terminated.
+G4WT27 > Run Summary
+G4WT27 >   Number of events processed : 35
+G4WT27 >   User=196.160000s Real=6.222946s Sys=0.780000s [Cpu=3164.7%]
+G4WT16 > --> Event 948 starts with initial seeds (88647493,76274789).
+G4WT5 > Thread-local run terminated.
+G4WT5 > Run Summary
+G4WT5 >   Number of events processed : 25
+G4WT5 >   User=196.250000s Real=6.232600s Sys=0.790000s [Cpu=3161.4%]
+G4WT17 > --> Event 913 starts with initial seeds (14190418,20880645).
+G4WT19 > --> Event 954 starts with initial seeds (26053563,98545819).
+G4WT26 > --> Event 971 starts with initial seeds (61954660,30755414).
+G4WT26 > --> Event 972 starts with initial seeds (989385,31124518).
+G4WT20 > --> Event 966 starts with initial seeds (26257458,17837616).
+G4WT3 > --> Event 981 starts with initial seeds (76502000,90440305).
+G4WT12 > --> Event 858 starts with initial seeds (50548385,97701337).
+G4WT3 > --> Event 982 starts with initial seeds (63910559,38789341).
+G4WT12 > --> Event 859 starts with initial seeds (47368485,97464550).
+G4WT9 > --> Event 824 starts with initial seeds (67786746,25712702).
+G4WT20 > --> Event 967 starts with initial seeds (76170918,52852965).
+G4WT20 > --> Event 968 starts with initial seeds (3623545,47187373).
+G4WT31 > Thread-local run terminated.
+G4WT31 > Run Summary
+G4WT31 >   Number of events processed : 25
+G4WT31 >   User=197.550000s Real=6.295634s Sys=0.770000s [Cpu=3150.1%]
+G4WT7 > --> Event 993 starts with initial seeds (44474615,31165818).
+G4WT28 > --> Event 903 starts with initial seeds (96525093,8518465).
+G4WT28 > --> Event 904 starts with initial seeds (84634853,55586056).
+G4WT25 > --> Event 893 starts with initial seeds (26916360,56846455).
+G4WT25 > --> Event 894 starts with initial seeds (3126614,19906738).
+G4WT25 > Thread-local run terminated.
+G4WT25 > Run Summary
+G4WT25 >   Number of events processed : 30
+G4WT25 >   User=198.110000s Real=6.328148s Sys=0.800000s [Cpu=3143.3%]
+G4WT15 > Thread-local run terminated.
+G4WT15 > Run Summary
+G4WT15 >   Number of events processed : 30
+G4WT15 >   User=198.620000s Real=6.356522s Sys=0.790000s [Cpu=3137.1%]
+G4WT11 > --> Event 939 starts with initial seeds (48696852,41168335).
+G4WT11 > Thread-local run terminated.
+G4WT11 > Run Summary
+G4WT11 >   Number of events processed : 35
+G4WT11 >   User=199.000000s Real=6.379891s Sys=0.780000s [Cpu=3131.4%]
+G4WT29 > Thread-local run terminated.
+G4WT29 > Run Summary
+G4WT29 >   Number of events processed : 20
+G4WT29 >   User=199.600000s Real=6.420366s Sys=0.800000s [Cpu=3121.3%]
+G4WT6 > --> Event 987 starts with initial seeds (96535080,14753748).
+G4WT6 > --> Event 988 starts with initial seeds (34570802,30203073).
+G4WT30 > Thread-local run terminated.
+G4WT30 > Run Summary
+G4WT30 >   Number of events processed : 30
+G4WT30 >   User=199.720000s Real=6.426916s Sys=0.760000s [Cpu=3119.4%]
+G4WT3 > --> Event 983 starts with initial seeds (35908923,28226300).
+G4WT3 > --> Event 984 starts with initial seeds (97506217,23743747).
+G4WT20 > --> Event 969 starts with initial seeds (56215507,18327889).
+G4WT20 > Thread-local run terminated.
+G4WT20 > Run Summary
+G4WT20 >   Number of events processed : 40
+G4WT20 >   User=200.870000s Real=6.513305s Sys=0.800000s [Cpu=3096.3%]
+G4WT12 > Thread-local run terminated.
+G4WT12 > Run Summary
+G4WT12 >   Number of events processed : 25
+G4WT12 >   User=200.840000s Real=6.513963s Sys=0.790000s [Cpu=3095.4%]
+G4WT16 > --> Event 949 starts with initial seeds (25749249,95626955).
+G4WT16 > Thread-local run terminated.
+G4WT16 > Run Summary
+G4WT16 >   Number of events processed : 25
+G4WT16 >   User=201.240000s Real=6.547691s Sys=0.790000s [Cpu=3085.5%]
+G4WT0 > --> Event 897 starts with initial seeds (1019490,15665183).
+G4WT0 > --> Event 898 starts with initial seeds (78543004,5209200).
+G4WT0 > --> Event 899 starts with initial seeds (44985677,79972311).
+G4WT28 > Thread-local run terminated.
+G4WT28 > Run Summary
+G4WT28 >   Number of events processed : 25
+G4WT28 >   User=201.630000s Real=6.588138s Sys=0.740000s [Cpu=3071.7%]
+G4WT6 > --> Event 989 starts with initial seeds (57248528,27087195).
+G4WT6 > Thread-local run terminated.
+G4WT6 > Run Summary
+G4WT6 >   Number of events processed : 30
+G4WT6 >   User=201.840000s Real=6.605732s Sys=0.800000s [Cpu=3067.6%]
+G4WT17 > --> Event 914 starts with initial seeds (20057442,66533013).
+G4WT17 > Thread-local run terminated.
+G4WT17 > Run Summary
+G4WT17 >   Number of events processed : 20
+G4WT17 >   User=202.320000s Real=6.669491s Sys=0.810000s [Cpu=3045.7%]
+G4WT7 > --> Event 994 starts with initial seeds (91908917,90268446).
+G4WT22 > Thread-local run terminated.
+G4WT22 > Run Summary
+G4WT22 >   Number of events processed : 30
+G4WT22 >   User=202.720000s Real=6.726690s Sys=0.780000s [Cpu=3025.3%]
+G4WT19 > Thread-local run terminated.
+G4WT19 > Run Summary
+G4WT19 >   Number of events processed : 35
+G4WT19 >   User=203.410000s Real=6.838596s Sys=0.800000s [Cpu=2986.1%]
 G4WT0 > Thread-local run terminated.
 G4WT0 > Run Summary
-G4WT0 >   Number of events processed : 6
-G4WT0 >   User=6.350000s Real=4.088331s Sys=0.010000s [Cpu=155.6%]
-G4WT0 > ... write file : plz_work_kthxbai_t0.root - done
-G4WT0 > ... close file : plz_work_kthxbai_t0.root - done
+G4WT0 >   Number of events processed : 35
+G4WT0 >   User=203.880000s Real=6.929932s Sys=0.820000s [Cpu=2953.9%]
+G4WT3 > Thread-local run terminated.
+G4WT3 > Run Summary
+G4WT3 >   Number of events processed : 35
+G4WT3 >   User=203.920000s Real=6.941062s Sys=0.810000s [Cpu=2949.5%]
+G4WT9 > Thread-local run terminated.
+G4WT9 > Run Summary
+G4WT9 >   Number of events processed : 25
+G4WT9 >   User=204.070000s Real=6.981740s Sys=0.840000s [Cpu=2934.9%]
+G4WT26 > --> Event 973 starts with initial seeds (96928440,9166305).
+G4WT26 > --> Event 974 starts with initial seeds (22640182,63123868).
+G4WT7 > Thread-local run terminated.
+G4WT7 > Run Summary
+G4WT7 >   Number of events processed : 35
+G4WT7 >   User=205.190000s Real=7.608121s Sys=0.760000s [Cpu=2707.0%]
+G4WT26 > Thread-local run terminated.
+G4WT26 > Run Summary
+G4WT26 >   Number of events processed : 30
+G4WT26 >   User=205.520000s Real=7.778789s Sys=0.840000s [Cpu=2652.9%]
  Run terminated.
 Run Summary
-  Number of events processed : 10
-  User=6.350000s Real=4.114885s Sys=0.020000s [Cpu=154.8%]
-... write file : plz_work_kthxbai.root - done
-... close file : plz_work_kthxbai.root - done
-... delete empty file : plz_work_kthxbai.root - done
+  Number of events processed : 1000
+  User=205.750000s Real=7.996450s Sys=1.400000s [Cpu=2590.5%]
+0 events have been kept for refreshing and/or reviewing.
+  "/vis/reviewKeptEvents" to review them one by one.
+  "/vis/enable", then "/vis/viewer/flush" or "/vis/viewer/rebuild" to see them accumulated.
 Graphics systems deleted.
 Visualization Manager deleting...
-G4WT0 > Destroying WorkerRunManager (0x731804036d70)
+G4WT21 > Destroying WorkerRunManager (0x7f875004bae0)
+G4WT21 > G4 kernel has come to Quit state.
+G4WT8 > Destroying WorkerRunManager (0x7f879404bae0)
+G4WT7 > Destroying WorkerRunManager (0x7f879004bb20)
+G4WT7 > G4 kernel has come to Quit state.
+G4WT0 > Destroying WorkerRunManager (0x7f87b404bae0)
+G4WT22 > Destroying WorkerRunManager (0x7f875404bae0)
+G4WT23 > Destroying WorkerRunManager (0x7f874804bae0)
+G4WT31 > Destroying WorkerRunManager (0x7f872004bbe0)
+G4WT10 > Destroying WorkerRunManager (0x7f878004bae0)
+G4WT4 > Destroying WorkerRunManager (0x7f87a404bae0)
+G4WT4 > G4 kernel has come to Quit state.
+G4WT29 > Destroying WorkerRunManager (0x7f873404bae0)
+G4WT5 > Destroying WorkerRunManager (0x7f879804bae0)
+G4WT29 > G4 kernel has come to Quit state.
+G4WT8 > G4 kernel has come to Quit state.
+G4WT18 > Destroying WorkerRunManager (0x7f876404bae0)
+G4WT30 > Destroying WorkerRunManager (0x7f872804bae0)
+G4WT8 > UserDetectorConstruction deleted.
+G4WT30 > G4 kernel has come to Quit state.
+G4WT29 > UserDetectorConstruction deleted.
+G4WT29 > UserPhysicsList deleted.
+G4WT29 > UserActionInitialization deleted.
+G4WT29 > UserWorkerInitialization deleted.
+G4WT29 > UserWorkerThreadInitialization deleted.
+G4WT16 > Destroying WorkerRunManager (0x7f876804bae0)
 G4WT0 > G4 kernel has come to Quit state.
-G4WT0 > Deleting G4Run (id:0) 
-G4WT0 > UserDetectorConstruction deleted 0
-G4WT0 > UserPhysicsList deleted 0
-G4WT0 > UserActionInitialization deleted 0
-G4WT0 > UserWorkerInitialization deleted 0
-G4WT0 > UserWorkerThreadInitialization deleted 0
-G4WT0 > UserRunAction deleted.
-G4WT0 > UserPrimaryGenerator deleted.
-G4WT0 > RunManager is deleting RunManagerKernel.
-G4WT0 > G4SDManager deleted.
-G4WT1 > Destroying WorkerRunManager (0x7317fc036d50)
+G4WT15 > Destroying WorkerRunManager (0x7f877404bb60)
+G4WT14 > Destroying WorkerRunManager (0x7f877004bae0)
+G4WT14 > G4 kernel has come to Quit state.
+G4WT25 > Destroying WorkerRunManager (0x7f874404bae0)
+G4WT26 > Destroying WorkerRunManager (0x7f873804bae0)
+G4WT14 > UserDetectorConstruction deleted.
+G4WT14 > UserPhysicsList deleted.
+G4WT14 > UserActionInitialization deleted.
+G4WT23 > G4 kernel has come to Quit state.
+G4WT1 > Destroying WorkerRunManager (0x7f87ac04baf0)
+G4WT24 > Destroying WorkerRunManager (0x7f874004bae0)
+G4WT6 > Destroying WorkerRunManager (0x7f879c04bae0)
+G4WT17 > Destroying WorkerRunManager (0x7f876004bae0)
+G4WT11 > Destroying WorkerRunManager (0x7f878404bae0)
+G4WT31 > G4 kernel has come to Quit state.
+G4WT27 > Destroying WorkerRunManager (0x7f873c04bae0)
+G4WT27 > G4 kernel has come to Quit state.
+G4WT20 > Destroying WorkerRunManager (0x7f875c04bae0)
+G4WT5 > G4 kernel has come to Quit state.
+G4WT27 > UserDetectorConstruction deleted.
+G4WT27 > UserPhysicsList deleted.
+G4WT27 > UserActionInitialization deleted.
+G4WT27 > UserWorkerInitialization deleted.
+G4WT27 > UserWorkerThreadInitialization deleted.
+G4WT8 > UserPhysicsList deleted.
+G4WT5 > UserDetectorConstruction deleted.
+G4WT5 > UserPhysicsList deleted.
+G4WT5 > UserActionInitialization deleted.
+G4WT5 > UserWorkerInitialization deleted.
+G4WT5 > UserWorkerThreadInitialization deleted.
+G4WT13 > Destroying WorkerRunManager (0x7f877c04bae0)
+G4WT30 > UserDetectorConstruction deleted.
+G4WT2 > Destroying WorkerRunManager (0x7f87a804bae0)
+G4WT2 > G4 kernel has come to Quit state.
+G4WT16 > G4 kernel has come to Quit state.
+G4WT15 > G4 kernel has come to Quit state.
+G4WT21 > UserDetectorConstruction deleted.
+G4WT29 > UserRunAction deleted.
+G4WT0 > UserDetectorConstruction deleted.
+G4WT27 > UserRunAction deleted.
+G4WT26 > G4 kernel has come to Quit state.
+G4WT7 > UserDetectorConstruction deleted.
+G4WT7 > UserPhysicsList deleted.
+G4WT14 > UserWorkerInitialization deleted.
+G4WT14 > UserWorkerThreadInitialization deleted.
+G4WT12 > Destroying WorkerRunManager (0x7f877804bae0)
 G4WT1 > G4 kernel has come to Quit state.
-G4WT1 > Deleting G4Run (id:0) 
-G4WT1 > UserDetectorConstruction deleted 0
-G4WT1 > UserPhysicsList deleted 0
-G4WT1 > UserActionInitialization deleted 0
-G4WT1 > UserWorkerInitialization deleted 0
-G4WT1 > UserWorkerThreadInitialization deleted 0
-G4WT0 > EventManager deleted.
-G4WT0 > Units table cleared.
-G4WT0 > TransportationManager deleted.
-G4WT0 > Total navigation history collections cleaned: 50
-G4WT0 > ================== Deleting memory pools ===================
-G4WT0 > Pool ID '20G4NavigationLevelRep', size : 0.075 MB
-G4WT0 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
-G4WT0 > Pool ID '7G4Event', size : 0.000961 MB
-G4WT0 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
-G4WT0 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
-G4WT0 > Pool ID '17G4DynamicParticle', size : 0.0211 MB
+G4WT12 > G4 kernel has come to Quit state.
+G4WT6 > G4 kernel has come to Quit state.
+G4WT17 > G4 kernel has come to Quit state.
+G4WT11 > G4 kernel has come to Quit state.
+G4WT23 > UserDetectorConstruction deleted.
+G4WT23 > UserPhysicsList deleted.
+G4WT23 > UserActionInitialization deleted.
+G4WT23 > UserWorkerInitialization deleted.
+G4WT12 > UserDetectorConstruction deleted.
+G4WT6 > UserDetectorConstruction deleted.
+G4WT6 > UserPhysicsList deleted.
+G4WT6 > UserActionInitialization deleted.
+G4WT11 > UserDetectorConstruction deleted.
+G4WT11 > UserPhysicsList deleted.
+G4WT11 > UserActionInitialization deleted.
+G4WT11 > UserWorkerInitialization deleted.
+G4WT11 > UserWorkerThreadInitialization deleted.
+G4WT3 > Destroying WorkerRunManager (0x7f87a004bb00)
+G4WT3 > G4 kernel has come to Quit state.
+G4WT13 > G4 kernel has come to Quit state.
+G4WT30 > UserPhysicsList deleted.
+G4WT30 > UserActionInitialization deleted.
+G4WT30 > UserWorkerInitialization deleted.
+G4WT30 > UserWorkerThreadInitialization deleted.
+G4WT22 > G4 kernel has come to Quit state.
+G4WT3 > UserDetectorConstruction deleted.
+G4WT0 > UserPhysicsList deleted.
+G4WT0 > UserActionInitialization deleted.
+G4WT16 > UserDetectorConstruction deleted.
+G4WT7 > UserActionInitialization deleted.
+G4WT7 > UserWorkerInitialization deleted.
+G4WT15 > UserDetectorConstruction deleted.
+G4WT15 > UserPhysicsList deleted.
+G4WT15 > UserActionInitialization deleted.
+G4WT29 > UserPrimaryGenerator deleted.
+G4WT29 > RunManager is deleting RunManagerKernel.
+G4WT26 > UserDetectorConstruction deleted.
+G4WT26 > UserPhysicsList deleted.
+G4WT26 > UserActionInitialization deleted.
+G4WT26 > UserWorkerInitialization deleted.
+G4WT17 > UserDetectorConstruction deleted.
+G4WT17 > UserPhysicsList deleted.
+G4WT17 > UserActionInitialization deleted.
+G4WT17 > UserWorkerInitialization deleted.
+G4WT17 > UserWorkerThreadInitialization deleted.
+G4WT23 > UserWorkerThreadInitialization deleted.
+G4WT29 > G4SDManager deleted.
+G4WT12 > UserPhysicsList deleted.
+G4WT30 > UserRunAction deleted.
+G4WT31 > UserDetectorConstruction deleted.
+G4WT31 > UserPhysicsList deleted.
+G4WT31 > UserActionInitialization deleted.
+G4WT31 > UserWorkerInitialization deleted.
+G4WT31 > UserWorkerThreadInitialization deleted.
+G4WT8 > UserActionInitialization deleted.
+G4WT8 > UserWorkerInitialization deleted.
+G4WT8 > UserWorkerThreadInitialization deleted.
+G4WT21 > UserPhysicsList deleted.
+G4WT21 > UserActionInitialization deleted.
+G4WT21 > UserWorkerInitialization deleted.
+G4WT3 > UserPhysicsList deleted.
+G4WT3 > UserActionInitialization deleted.
+G4WT3 > UserWorkerInitialization deleted.
+G4WT3 > UserWorkerThreadInitialization deleted.
+G4WT0 > UserWorkerInitialization deleted.
+G4WT0 > UserWorkerThreadInitialization deleted.
+G4WT7 > UserWorkerThreadInitialization deleted.
+G4WT17 > UserRunAction deleted.
+G4WT17 > UserPrimaryGenerator deleted.
+G4WT17 > RunManager is deleting RunManagerKernel.
+G4WT11 > UserRunAction deleted.
+G4WT14 > UserRunAction deleted.
+G4WT14 > UserPrimaryGenerator deleted.
+G4WT14 > RunManager is deleting RunManagerKernel.
+G4WT10 > G4 kernel has come to Quit state.
+G4WT26 > UserWorkerThreadInitialization deleted.
+G4WT20 > G4 kernel has come to Quit state.
+G4WT19 > Destroying WorkerRunManager (0x7f875804bae0)
+G4WT4 > UserDetectorConstruction deleted.
+G4WT4 > UserPhysicsList deleted.
+G4WT4 > UserActionInitialization deleted.
+G4WT14 > G4SDManager deleted.
+G4WT18 > G4 kernel has come to Quit state.
+G4WT6 > UserWorkerInitialization deleted.
+G4WT6 > UserWorkerThreadInitialization deleted.
+G4WT9 > Destroying WorkerRunManager (0x7f878804bae0)
+G4WT20 > UserDetectorConstruction deleted.
+G4WT20 > UserPhysicsList deleted.
+G4WT20 > UserActionInitialization deleted.
+G4WT20 > UserWorkerInitialization deleted.
+G4WT20 > UserWorkerThreadInitialization deleted.
+G4WT14 > EventManager deleted.
+G4WT18 > UserDetectorConstruction deleted.
+G4WT18 > UserPhysicsList deleted.
+G4WT31 > UserRunAction deleted.
+G4WT14 > Units table cleared.
+G4WT22 > UserDetectorConstruction deleted.
+G4WT22 > UserPhysicsList deleted.
+G4WT22 > UserActionInitialization deleted.
+G4WT22 > UserWorkerInitialization deleted.
+G4WT22 > UserWorkerThreadInitialization deleted.
+G4WT17 > G4SDManager deleted.
+G4WT10 > UserDetectorConstruction deleted.
+G4WT10 > UserPhysicsList deleted.
+G4WT10 > UserActionInitialization deleted.
+G4WT10 > UserWorkerInitialization deleted.
+G4WT10 > UserWorkerThreadInitialization deleted.
+G4WT12 > UserActionInitialization deleted.
+G4WT7 > UserRunAction deleted.
+G4WT7 > UserPrimaryGenerator deleted.
+G4WT7 > RunManager is deleting RunManagerKernel.
+G4WT29 > EventManager deleted.
+G4WT1 > UserDetectorConstruction deleted.
+G4WT29 > Units table cleared.
+G4WT25 > G4 kernel has come to Quit state.
+G4WT21 > UserWorkerThreadInitialization deleted.
+G4WT13 > UserDetectorConstruction deleted.
+G4WT18 > UserActionInitialization deleted.
+G4WT29 > TransportationManager deleted.
+G4WT31 > UserPrimaryGenerator deleted.
+G4WT31 > RunManager is deleting RunManagerKernel.
+G4WT29 > ================== Deleting memory pools ===================
+G4WT11 > UserPrimaryGenerator deleted.
+G4WT29 > Pool ID '20G4NavigationLevelRep', size : 0.075 MB
+G4WT23 > UserRunAction deleted.
+G4WT24 > G4 kernel has come to Quit state.
+G4WT10 > UserRunAction deleted.
+G4WT10 > UserPrimaryGenerator deleted.
+G4WT10 > RunManager is deleting RunManagerKernel.
+G4WT4 > UserWorkerInitialization deleted.
+G4WT4 > UserWorkerThreadInitialization deleted.
+G4WT3 > UserRunAction deleted.
+G4WT3 > UserPrimaryGenerator deleted.
+G4WT3 > RunManager is deleting RunManagerKernel.
+G4WT10 > G4SDManager deleted.
+G4WT12 > UserWorkerInitialization deleted.
+G4WT17 > EventManager deleted.
+G4WT28 > Destroying WorkerRunManager (0x7f873004bae0)
+G4WT9 > G4 kernel has come to Quit state.
+G4WT26 > UserRunAction deleted.
+G4WT26 > UserPrimaryGenerator deleted.
+G4WT26 > RunManager is deleting RunManagerKernel.
+G4WT1 > UserPhysicsList deleted.
+G4WT28 > G4 kernel has come to Quit state.
+G4WT13 > UserPhysicsList deleted.
+G4WT13 > UserActionInitialization deleted.
+G4WT26 > G4SDManager deleted.
+G4WT25 > UserDetectorConstruction deleted.
+G4WT25 > UserPhysicsList deleted.
+G4WT28 > UserDetectorConstruction deleted.
+G4WT28 > UserPhysicsList deleted.
+G4WT21 > UserRunAction deleted.
+G4WT21 > UserPrimaryGenerator deleted.
+G4WT21 > RunManager is deleting RunManagerKernel.
+G4WT26 > EventManager deleted.
+G4WT31 > G4SDManager deleted.
+G4WT14 > TransportationManager deleted.
+G4WT19 > G4 kernel has come to Quit state.
+G4WT8 > UserRunAction deleted.
+G4WT14 > ================== Deleting memory pools ===================
+G4WT24 > UserDetectorConstruction deleted.
+G4WT24 > UserPhysicsList deleted.
+G4WT24 > UserActionInitialization deleted.
+G4WT24 > UserWorkerInitialization deleted.
+G4WT24 > UserWorkerThreadInitialization deleted.
+G4WT20 > UserRunAction deleted.
+G4WT20 > UserPrimaryGenerator deleted.
+G4WT20 > RunManager is deleting RunManagerKernel.
+G4WT19 > UserDetectorConstruction deleted.
+G4WT19 > UserPhysicsList deleted.
+G4WT19 > UserActionInitialization deleted.
+G4WT19 > UserWorkerInitialization deleted.
+G4WT19 > UserWorkerThreadInitialization deleted.
+G4WT1 > UserActionInitialization deleted.
+G4WT1 > UserWorkerInitialization deleted.
+G4WT1 > UserWorkerThreadInitialization deleted.
+G4WT18 > UserWorkerInitialization deleted.
+G4WT18 > UserWorkerThreadInitialization deleted.
+G4WT16 > UserPhysicsList deleted.
+G4WT5 > UserRunAction deleted.
+G4WT5 > UserPrimaryGenerator deleted.
+G4WT5 > RunManager is deleting RunManagerKernel.
+G4WT11 > RunManager is deleting RunManagerKernel.
+G4WT24 > UserRunAction deleted.
+G4WT24 > UserPrimaryGenerator deleted.
+G4WT24 > RunManager is deleting RunManagerKernel.
+G4WT29 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT5 > G4SDManager deleted.
+G4WT29 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT11 > G4SDManager deleted.
+G4WT21 > G4SDManager deleted.
+G4WT31 > EventManager deleted.
+G4WT5 > EventManager deleted.
+G4WT8 > UserPrimaryGenerator deleted.
+G4WT5 > Units table cleared.
+G4WT14 > Pool ID '20G4NavigationLevelRep', size : 0.0798 MB
+G4WT19 > UserRunAction deleted.
+G4WT11 > EventManager deleted.
+G4WT12 > UserWorkerThreadInitialization deleted.
+G4WT17 > Units table cleared.
+G4WT3 > G4SDManager deleted.
+G4WT10 > EventManager deleted.
+G4WT17 > TransportationManager deleted.
+G4WT10 > Units table cleared.
+G4WT20 > G4SDManager deleted.
+G4WT17 > ================== Deleting memory pools ===================
+G4WT3 > EventManager deleted.
+G4WT10 > TransportationManager deleted.
+G4WT25 > UserActionInitialization deleted.
+G4WT10 > ================== Deleting memory pools ===================
+G4WT10 > Pool ID '20G4NavigationLevelRep', size : 0.0769 MB
+G4WT28 > UserActionInitialization deleted.
+G4WT27 > UserPrimaryGenerator deleted.
+G4WT27 > RunManager is deleting RunManagerKernel.
+G4WT6 > UserRunAction deleted.
+G4WT6 > UserPrimaryGenerator deleted.
+G4WT6 > RunManager is deleting RunManagerKernel.
+G4WT29 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT18 > UserRunAction deleted.
+G4WT4 > UserRunAction deleted.
+G4WT27 > G4SDManager deleted.
 G4WT1 > UserRunAction deleted.
 G4WT1 > UserPrimaryGenerator deleted.
 G4WT1 > RunManager is deleting RunManagerKernel.
-G4WT0 > Pool ID '7G4Track', size : 0.0413 MB
-G4WT0 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
-G4WT0 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
-G4WT0 > Pool ID '10G4Fragment', size : 0.00288 MB
-G4WT0 > Pool ID '17G4ReactionProduct', size : 0.00288 MB
-G4WT0 > Number of memory pools allocated: 11; of which, static: 0
-G4WT0 > Dynamic pools deleted: 11 / Total memory freed: 0.15 MB
-G4WT0 > ============================================================
-G4WT0 > G4Allocator objects are deleted.
-G4WT0 > Thread-local UImanager is to be deleted.
-G4WT0 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT14 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT21 > EventManager deleted.
+G4WT5 > TransportationManager deleted.
+G4WT19 > UserPrimaryGenerator deleted.
+G4WT21 > Units table cleared.
+G4WT11 > Units table cleared.
 G4WT1 > G4SDManager deleted.
-UImanager deleted.
-StateManager deleted.
-RunManagerKernel is deleted. Good bye :)
-RunManager is deleted.
+G4WT7 > G4SDManager deleted.
+G4WT9 > UserDetectorConstruction deleted.
+G4WT11 > TransportationManager deleted.
+G4WT21 > TransportationManager deleted.
+G4WT11 > ================== Deleting memory pools ===================
+G4WT11 > Pool ID '20G4NavigationLevelRep', size : 0.0721 MB
+G4WT15 > UserWorkerInitialization deleted.
+G4WT7 > EventManager deleted.
+G4WT10 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT10 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT10 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT20 > EventManager deleted.
+G4WT28 > UserWorkerInitialization deleted.
+G4WT28 > UserWorkerThreadInitialization deleted.
+G4WT26 > Units table cleared.
+G4WT20 > Units table cleared.
+G4WT29 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT18 > UserPrimaryGenerator deleted.
+G4WT29 > Pool ID '17G4DynamicParticle', size : 0.0211 MB
+G4WT26 > TransportationManager deleted.
+G4WT30 > UserPrimaryGenerator deleted.
+G4WT26 > ================== Deleting memory pools ===================
+G4WT30 > RunManager is deleting RunManagerKernel.
+G4WT0 > UserRunAction deleted.
+G4WT14 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT5 > ================== Deleting memory pools ===================
+G4WT19 > RunManager is deleting RunManagerKernel.
+G4WT27 > EventManager deleted.
+G4WT22 > UserRunAction deleted.
+G4WT22 > UserPrimaryGenerator deleted.
+G4WT22 > RunManager is deleting RunManagerKernel.
+G4WT13 > UserWorkerInitialization deleted.
+G4WT13 > UserWorkerThreadInitialization deleted.
+G4WT19 > G4SDManager deleted.
+G4WT25 > UserWorkerInitialization deleted.
+G4WT25 > UserWorkerThreadInitialization deleted.
+G4WT11 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT22 > G4SDManager deleted.
 G4WT1 > EventManager deleted.
+G4WT3 > Units table cleared.
+G4WT7 > Units table cleared.
+G4WT10 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT23 > UserPrimaryGenerator deleted.
+G4WT23 > RunManager is deleting RunManagerKernel.
+G4WT24 > G4SDManager deleted.
+G4WT18 > RunManager is deleting RunManagerKernel.
+G4WT4 > UserPrimaryGenerator deleted.
+G4WT4 > RunManager is deleting RunManagerKernel.
+G4WT29 > Pool ID '7G4Track', size : 0.0413 MB
+G4WT20 > TransportationManager deleted.
+G4WT31 > Units table cleared.
+G4WT6 > G4SDManager deleted.
+G4WT24 > EventManager deleted.
+G4WT4 > G4SDManager deleted.
+G4WT14 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT25 > UserRunAction deleted.
+G4WT25 > UserPrimaryGenerator deleted.
+G4WT25 > RunManager is deleting RunManagerKernel.
+G4WT2 > UserDetectorConstruction deleted.
+G4WT2 > UserPhysicsList deleted.
+G4WT6 > EventManager deleted.
+G4WT4 > EventManager deleted.
+G4WT16 > UserActionInitialization deleted.
+G4WT25 > G4SDManager deleted.
+G4WT15 > UserWorkerThreadInitialization deleted.
+G4WT11 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT11 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT11 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT11 > Pool ID '17G4DynamicParticle', size : 0.024 MB
+G4WT10 > Pool ID '17G4DynamicParticle', size : 0.024 MB
+G4WT13 > UserRunAction deleted.
+G4WT13 > UserPrimaryGenerator deleted.
+G4WT13 > RunManager is deleting RunManagerKernel.
+G4WT8 > RunManager is deleting RunManagerKernel.
+G4WT29 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
+G4WT23 > G4SDManager deleted.
+G4WT18 > G4SDManager deleted.
+G4WT13 > G4SDManager deleted.
+G4WT26 > Pool ID '20G4NavigationLevelRep', size : 0.0875 MB
+G4WT0 > UserPrimaryGenerator deleted.
+G4WT26 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT14 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT8 > G4SDManager deleted.
+G4WT23 > EventManager deleted.
+G4WT18 > EventManager deleted.
+G4WT27 > Units table cleared.
+G4WT9 > UserPhysicsList deleted.
+G4WT18 > Units table cleared.
+G4WT17 > Pool ID '20G4NavigationLevelRep', size : 0.0846 MB
+G4WT28 > UserRunAction deleted.
+G4WT28 > UserPrimaryGenerator deleted.
+G4WT28 > RunManager is deleting RunManagerKernel.
+G4WT8 > EventManager deleted.
+G4WT4 > Units table cleared.
+G4WT19 > EventManager deleted.
 G4WT1 > Units table cleared.
+G4WT19 > Units table cleared.
+G4WT22 > EventManager deleted.
+G4WT4 > TransportationManager deleted.
+G4WT7 > TransportationManager deleted.
+G4WT10 > Pool ID '7G4Track', size : 0.0481 MB
+G4WT12 > UserRunAction deleted.
+G4WT3 > TransportationManager deleted.
+G4WT15 > UserRunAction deleted.
+G4WT15 > UserPrimaryGenerator deleted.
+G4WT15 > RunManager is deleting RunManagerKernel.
+G4WT24 > Units table cleared.
+G4WT26 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT5 > Pool ID '20G4NavigationLevelRep', size : 0.0779 MB
+G4WT14 > Pool ID '17G4DynamicParticle', size : 0.0202 MB
+G4WT31 > TransportationManager deleted.
+G4WT15 > G4SDManager deleted.
+G4WT30 > G4SDManager deleted.
+G4WT23 > Units table cleared.
+G4WT9 > UserActionInitialization deleted.
+G4WT9 > UserWorkerInitialization deleted.
+G4WT9 > UserWorkerThreadInitialization deleted.
+G4WT17 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT6 > Units table cleared.
+G4WT16 > UserWorkerInitialization deleted.
+G4WT16 > UserWorkerThreadInitialization deleted.
+G4WT18 > TransportationManager deleted.
+G4WT8 > Units table cleared.
+G4WT18 > ================== Deleting memory pools ===================
+G4WT28 > G4SDManager deleted.
+G4WT25 > EventManager deleted.
+G4WT19 > TransportationManager deleted.
+G4WT25 > Units table cleared.
+G4WT22 > Units table cleared.
+G4WT7 > ================== Deleting memory pools ===================
+G4WT28 > EventManager deleted.
+G4WT10 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
+G4WT10 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT22 > TransportationManager deleted.
+G4WT20 > ================== Deleting memory pools ===================
+G4WT3 > ================== Deleting memory pools ===================
+G4WT0 > RunManager is deleting RunManagerKernel.
+G4WT26 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT26 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT26 > Pool ID '17G4DynamicParticle', size : 0.0221 MB
+G4WT14 > Pool ID '7G4Track', size : 0.0394 MB
+G4WT13 > EventManager deleted.
+G4WT31 > ================== Deleting memory pools ===================
+G4WT0 > G4SDManager deleted.
+G4WT13 > Units table cleared.
+G4WT15 > EventManager deleted.
+G4WT30 > EventManager deleted.
+G4WT15 > Units table cleared.
+G4WT30 > Units table cleared.
+G4WT13 > TransportationManager deleted.
+G4WT6 > TransportationManager deleted.
+G4WT13 > ================== Deleting memory pools ===================
+G4WT15 > TransportationManager deleted.
+G4WT8 > TransportationManager deleted.
+G4WT15 > ================== Deleting memory pools ===================
+G4WT19 > ================== Deleting memory pools ===================
+G4WT8 > ================== Deleting memory pools ===================
+G4WT19 > Pool ID '20G4NavigationLevelRep', size : 0.0817 MB
+G4WT25 > TransportationManager deleted.
+G4WT28 > Units table cleared.
+G4WT25 > ================== Deleting memory pools ===================
+G4WT10 > Pool ID '17G4ReactionProduct', size : 0.0125 MB
+G4WT29 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT22 > ================== Deleting memory pools ===================
+G4WT20 > Pool ID '20G4NavigationLevelRep', size : 0.0827 MB
+G4WT9 > UserRunAction deleted.
+G4WT9 > UserPrimaryGenerator deleted.
+G4WT9 > RunManager is deleting RunManagerKernel.
+G4WT5 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT26 > Pool ID '7G4Track', size : 0.0442 MB
+G4WT14 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT2 > UserActionInitialization deleted.
+G4WT2 > UserWorkerInitialization deleted.
+G4WT2 > UserWorkerThreadInitialization deleted.
+G4WT9 > G4SDManager deleted.
+G4WT23 > TransportationManager deleted.
+G4WT21 > ================== Deleting memory pools ===================
+G4WT11 > Pool ID '7G4Track', size : 0.0471 MB
+G4WT23 > ================== Deleting memory pools ===================
+G4WT11 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
+G4WT9 > EventManager deleted.
+G4WT13 > Pool ID '20G4NavigationLevelRep', size : 0.0779 MB
+G4WT6 > ================== Deleting memory pools ===================
+G4WT4 > ================== Deleting memory pools ===================
+G4WT16 > UserRunAction deleted.
+G4WT16 > UserPrimaryGenerator deleted.
+G4WT16 > RunManager is deleting RunManagerKernel.
+G4WT7 > Pool ID '20G4NavigationLevelRep', size : 0.074 MB
+G4WT8 > Pool ID '20G4NavigationLevelRep', size : 0.0798 MB
+G4WT19 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT12 > UserPrimaryGenerator deleted.
+G4WT12 > RunManager is deleting RunManagerKernel.
+G4WT10 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT10 > Number of memory pools allocated: 11; of which, static: 0
+G4WT10 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT2 > UserRunAction deleted.
+G4WT2 > UserPrimaryGenerator deleted.
+G4WT2 > RunManager is deleting RunManagerKernel.
+G4WT24 > TransportationManager deleted.
+G4WT5 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT26 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT14 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT14 > Pool ID '17G4ReactionProduct', size : 0.0115 MB
+G4WT27 > TransportationManager deleted.
+G4WT2 > G4SDManager deleted.
+G4WT27 > ================== Deleting memory pools ===================
+G4WT0 > EventManager deleted.
+G4WT30 > TransportationManager deleted.
+G4WT23 > Pool ID '20G4NavigationLevelRep', size : 0.0875 MB
+G4WT30 > ================== Deleting memory pools ===================
+G4WT18 > Pool ID '20G4NavigationLevelRep', size : 0.0798 MB
+G4WT9 > Units table cleared.
+G4WT13 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT6 > Pool ID '20G4NavigationLevelRep', size : 0.0798 MB
+G4WT9 > TransportationManager deleted.
+G4WT15 > Pool ID '20G4NavigationLevelRep', size : 0.0759 MB
+G4WT9 > ================== Deleting memory pools ===================
+G4WT15 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT8 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT19 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT25 > Pool ID '20G4NavigationLevelRep', size : 0.0836 MB
+G4WT16 > G4SDManager deleted.
+G4WT28 > TransportationManager deleted.
+G4WT29 > Pool ID '17G4ReactionProduct', size : 0.0135 MB
+G4WT10 > ============================================================
+G4WT10 > G4Allocator objects are deleted.
+G4WT10 > Thread-local UImanager is to be deleted.
+G4WT10 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT12 > G4SDManager deleted.
+G4WT5 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT5 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT5 > Pool ID '17G4DynamicParticle', size : 0.0202 MB
+G4WT31 > Pool ID '20G4NavigationLevelRep', size : 0.0807 MB
+G4WT14 > Pool ID '10G4Fragment', size : 0.00577 MB
+RunManager is deleted.
+G4WT14 > Number of memory pools allocated: 11; of which, static: 0
+G4WT14 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT14 > ============================================================
+G4WT14 > G4Allocator objects are deleted.
+G4WT14 > Thread-local UImanager is to be deleted.
+G4WT14 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT23 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT30 > Pool ID '20G4NavigationLevelRep', size : 0.0836 MB
+G4WT18 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT13 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT18 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT18 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT18 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT18 > Pool ID '17G4DynamicParticle', size : 0.0202 MB
+G4WT9 > Pool ID '20G4NavigationLevelRep', size : 0.0788 MB
+G4WT15 > Pool ID '7G4Event', size : 0.000961 MB
+RunManager is deleted.
+G4WT8 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT19 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT19 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT19 > Pool ID '17G4DynamicParticle', size : 0.0221 MB
+G4WT29 > Pool ID '10G4Fragment', size : 0.00673 MB
+G4WT22 > Pool ID '20G4NavigationLevelRep', size : 0.0884 MB
+G4WT20 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT16 > EventManager deleted.
+G4WT20 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT20 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT20 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT16 > Units table cleared.
+G4WT31 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT17 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT12 > EventManager deleted.
+G4WT21 > Pool ID '20G4NavigationLevelRep', size : 0.0817 MB
+G4WT27 > Pool ID '20G4NavigationLevelRep', size : 0.0788 MB
+G4WT0 > Units table cleared.
+G4WT2 > EventManager deleted.
+G4WT11 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT2 > Units table cleared.
+G4WT30 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT4 > Pool ID '20G4NavigationLevelRep', size : 0.0942 MB
+G4WT2 > TransportationManager deleted.
+G4WT4 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
 G4WT1 > TransportationManager deleted.
-G4WT1 > Total navigation history collections cleaned: 54
+G4WT7 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
 G4WT1 > ================== Deleting memory pools ===================
-G4WT1 > Pool ID '20G4NavigationLevelRep', size : 0.0807 MB
+G4WT9 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT15 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT15 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT15 > Pool ID '17G4DynamicParticle', size : 0.0211 MB
+G4WT15 > Pool ID '7G4Track', size : 0.0413 MB
+G4WT28 > ================== Deleting memory pools ===================
+G4WT19 > Pool ID '7G4Track', size : 0.0442 MB
+G4WT29 > Number of memory pools allocated: 11; of which, static: 0
+G4WT22 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT3 > Pool ID '20G4NavigationLevelRep', size : 0.0846 MB
+G4WT24 > ================== Deleting memory pools ===================
+G4WT26 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT26 > Pool ID '17G4ReactionProduct', size : 0.0115 MB
+G4WT5 > Pool ID '7G4Track', size : 0.0404 MB
+G4WT31 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT31 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT31 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT31 > Pool ID '17G4DynamicParticle', size : 0.0221 MB
+G4WT21 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT27 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT11 > Pool ID '17G4ReactionProduct', size : 0.0154 MB
+G4WT23 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT0 > TransportationManager deleted.
+G4WT30 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT0 > ================== Deleting memory pools ===================
+G4WT6 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT2 > ================== Deleting memory pools ===================
+G4WT4 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT4 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT4 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT4 > Pool ID '17G4DynamicParticle', size : 0.0211 MB
+G4WT4 > Pool ID '7G4Track', size : 0.0413 MB
+G4WT4 > Pool ID '18G4TouchableHistory', size : 0.00769 MB
+G4WT4 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT4 > Pool ID '17G4ReactionProduct', size : 0.0115 MB
+G4WT4 > Pool ID '10G4Fragment', size : 0.00481 MB
+G4WT4 > Number of memory pools allocated: 11; of which, static: 0
+G4WT4 > Dynamic pools deleted: 11 / Total memory freed: 0.19 MB
+G4WT4 > ============================================================
+G4WT4 > G4Allocator objects are deleted.
+G4WT4 > Thread-local UImanager is to be deleted.
+G4WT4 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT26 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT26 > Number of memory pools allocated: 11; of which, static: 0
+G4WT26 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT26 > ============================================================
+G4WT26 > G4Allocator objects are deleted.
+G4WT26 > Thread-local UImanager is to be deleted.
+G4WT26 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT21 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT11 > Pool ID '10G4Fragment', size : 0.00673 MB
+G4WT11 > Number of memory pools allocated: 11; of which, static: 0
+G4WT11 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT11 > ============================================================
+G4WT11 > G4Allocator objects are deleted.
+G4WT11 > Thread-local UImanager is to be deleted.
+RunManager is deleted.
+G4WT11 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT18 > Pool ID '7G4Track', size : 0.0394 MB
+G4WT7 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT7 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+RunManager is deleted.
+G4WT7 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT7 > Pool ID '17G4DynamicParticle', size : 0.0221 MB
+G4WT25 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT15 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
+G4WT28 > Pool ID '20G4NavigationLevelRep', size : 0.0846 MB
+G4WT19 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+RunManager is deleted.
+G4WT29 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT22 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT3 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT24 > Pool ID '20G4NavigationLevelRep', size : 0.0779 MB
+G4WT20 > Pool ID '17G4DynamicParticle', size : 0.0211 MB
+G4WT24 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT20 > Pool ID '7G4Track', size : 0.0413 MB
+G4WT16 > TransportationManager deleted.
+G4WT12 > Units table cleared.
+G4WT16 > ================== Deleting memory pools ===================
+G4WT27 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT27 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT27 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT27 > Pool ID '17G4DynamicParticle', size : 0.024 MB
+G4WT12 > TransportationManager deleted.
+G4WT0 > Pool ID '20G4NavigationLevelRep', size : 0.0731 MB
+G4WT6 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT6 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT6 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT6 > Pool ID '17G4DynamicParticle', size : 0.0231 MB
+G4WT9 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT8 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT7 > Pool ID '7G4Track', size : 0.0433 MB
+G4WT25 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT25 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT25 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT25 > Pool ID '17G4DynamicParticle', size : 0.0202 MB
+G4WT29 > ============================================================
+G4WT22 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT3 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT3 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT3 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT3 > Pool ID '17G4DynamicParticle', size : 0.0211 MB
+G4WT3 > Pool ID '7G4Track', size : 0.0413 MB
+G4WT3 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT3 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT3 > Pool ID '17G4ReactionProduct', size : 0.0135 MB
+G4WT3 > Pool ID '10G4Fragment', size : 0.00481 MB
+G4WT3 > Number of memory pools allocated: 11; of which, static: 0
+G4WT3 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT3 > ============================================================
+G4WT3 > G4Allocator objects are deleted.
+G4WT3 > Thread-local UImanager is to be deleted.
+G4WT3 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT2 > Pool ID '20G4NavigationLevelRep', size : 0.0788 MB
+G4WT18 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT1 > Pool ID '20G4NavigationLevelRep', size : 0.0711 MB
+G4WT6 > Pool ID '7G4Track', size : 0.0461 MB
+G4WT9 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT9 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT9 > Pool ID '17G4DynamicParticle', size : 0.0221 MB
+G4WT15 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT9 > Pool ID '7G4Track', size : 0.0442 MB
+G4WT19 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT25 > Pool ID '7G4Track', size : 0.0404 MB
+RunManager is deleted.
+G4WT29 > G4Allocator objects are deleted.
+G4WT29 > Thread-local UImanager is to be deleted.
+G4WT29 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT17 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT17 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT17 > Pool ID '17G4DynamicParticle', size : 0.0231 MB
+G4WT31 > Pool ID '7G4Track', size : 0.0442 MB
+G4WT16 > Pool ID '20G4NavigationLevelRep', size : 0.0759 MB
+G4WT21 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT21 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT21 > Pool ID '17G4DynamicParticle', size : 0.0202 MB
+G4WT27 > Pool ID '7G4Track', size : 0.0471 MB
+G4WT30 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT30 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT30 > Pool ID '17G4DynamicParticle', size : 0.0211 MB
+G4WT30 > Pool ID '7G4Track', size : 0.0413 MB
+RunManager is deleted.
+G4WT18 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT18 > Pool ID '17G4ReactionProduct', size : 0.0125 MB
+G4WT18 > Pool ID '10G4Fragment', size : 0.00481 MB
+G4WT18 > Number of memory pools allocated: 11; of which, static: 0
+G4WT18 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT18 > ============================================================
+G4WT18 > G4Allocator objects are deleted.
+G4WT18 > Thread-local UImanager is to be deleted.
+G4WT18 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT25 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT22 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT22 > Pool ID '17G4DynamicParticle', size : 0.0192 MB
+G4WT24 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT20 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT17 > Pool ID '7G4Track', size : 0.0452 MB
+G4WT31 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT31 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT31 > Pool ID '17G4ReactionProduct', size : 0.0125 MB
+RunManager is deleted.
+G4WT31 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT31 > Number of memory pools allocated: 11; of which, static: 0
+G4WT31 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT31 > ============================================================
+G4WT31 > G4Allocator objects are deleted.
+G4WT31 > Thread-local UImanager is to be deleted.
+G4WT31 > There should not be any thread-local G4cout/G4cerr hereafter.
 G4WT1 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT6 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
 G4WT1 > Pool ID '7G4Event', size : 0.000961 MB
 G4WT1 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
 G4WT1 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
-G4WT1 > Pool ID '17G4DynamicParticle', size : 0.0202 MB
-G4WT1 > Pool ID '7G4Track', size : 0.0404 MB
-G4WT1 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT1 > Pool ID '17G4DynamicParticle', size : 0.0231 MB
+G4WT9 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT19 > Pool ID '17G4ReactionProduct', size : 0.0115 MB
+G4WT25 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT25 > Pool ID '17G4ReactionProduct', size : 0.0125 MB
+RunManager is deleted.
+G4WT22 > Pool ID '7G4Track', size : 0.0385 MB
+G4WT24 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT24 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT24 > Pool ID '17G4DynamicParticle', size : 0.026 MB
+G4WT16 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT23 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT13 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT13 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT13 > Pool ID '17G4DynamicParticle', size : 0.0211 MB
+G4WT0 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT12 > ================== Deleting memory pools ===================
+G4WT2 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT30 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT30 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT30 > Pool ID '17G4ReactionProduct', size : 0.0135 MB
+G4WT7 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
+G4WT7 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT7 > Pool ID '17G4ReactionProduct', size : 0.0115 MB
+G4WT7 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT7 > Number of memory pools allocated: 11; of which, static: 0
+G4WT7 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT7 > ============================================================
+G4WT5 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT25 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT25 > Number of memory pools allocated: 11; of which, static: 0
+G4WT25 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT25 > ============================================================
+G4WT25 > G4Allocator objects are deleted.
+G4WT25 > Thread-local UImanager is to be deleted.
+G4WT25 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT21 > Pool ID '7G4Track', size : 0.0394 MB
+G4WT27 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT13 > Pool ID '7G4Track', size : 0.0413 MB
+G4WT0 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT12 > Pool ID '20G4NavigationLevelRep', size : 0.0798 MB
+RunManager is deleted.
+G4WT2 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT8 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT6 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT6 > Pool ID '17G4ReactionProduct', size : 0.0154 MB
+G4WT28 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+G4WT15 > Pool ID '17G4ReactionProduct', size : 0.0135 MB
+G4WT1 > Pool ID '7G4Track', size : 0.0452 MB
+G4WT9 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT19 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT19 > Number of memory pools allocated: 11; of which, static: 0
+G4WT19 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT19 > ============================================================
+G4WT19 > G4Allocator objects are deleted.
+G4WT19 > Thread-local UImanager is to be deleted.
+G4WT19 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT16 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT16 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT16 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT16 > Pool ID '17G4DynamicParticle', size : 0.0221 MB
+G4WT13 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT13 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT13 > Pool ID '17G4ReactionProduct', size : 0.0115 MB
+G4WT13 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT13 > Number of memory pools allocated: 11; of which, static: 0
+RunManager is deleted.G4WT13 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT13 > ============================================================
+
+G4WT13 > G4Allocator objects are deleted.
+G4WT13 > Thread-local UImanager is to be deleted.
+G4WT13 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT9 > Pool ID '17G4ReactionProduct', size : 0.0135 MB
+G4WT7 > G4Allocator objects are deleted.
+G4WT7 > Thread-local UImanager is to be deleted.
+G4WT5 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT20 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT20 > Pool ID '17G4ReactionProduct', size : 0.0144 MB
+G4WT20 > Pool ID '10G4Fragment', size : 0.00673 MB
+G4WT20 > Number of memory pools allocated: 11; of which, static: 0
+G4WT20 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT20 > ============================================================
+G4WT20 > G4Allocator objects are deleted.
+G4WT20 > Thread-local UImanager is to be deleted.
+G4WT20 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT2 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+RunManager is deleted.
+G4WT2 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT2 > Pool ID '17G4DynamicParticle', size : 0.0202 MB
+G4WT6 > Pool ID '10G4Fragment', size : 0.00673 MB
+G4WT6 > Number of memory pools allocated: 11; of which, static: 0
+G4WT6 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT6 > ============================================================
+G4WT6 > G4Allocator objects are deleted.
+G4WT6 > Thread-local UImanager is to be deleted.
+G4WT6 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT5 > Pool ID '10G4Fragment', size : 0.00577 MB
+RunManager is deleted.
+G4WT17 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT17 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT17 > Pool ID '17G4ReactionProduct', size : 0.0144 MB
+G4WT21 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT27 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT27 > Pool ID '17G4ReactionProduct', size : 0.0144 MB
+G4WT0 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT0 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT0 > Pool ID '17G4DynamicParticle', size : 0.0183 MB
+RunManager is deleted.G4WT30 > Pool ID '10G4Fragment', size : 0.00577 MB
+
+G4WT2 > Pool ID '7G4Track', size : 0.0404 MB
+G4WT28 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT28 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT28 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT28 > Pool ID '17G4DynamicParticle', size : 0.026 MB
+G4WT7 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT22 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT5 > Pool ID '17G4ReactionProduct', size : 0.0144 MB
+G4WT24 > Pool ID '7G4Track', size : 0.0509 MB
+G4WT23 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT17 > Pool ID '10G4Fragment', size : 0.00481 MB
+RunManager is deleted.
+G4WT17 > Number of memory pools allocated: 11; of which, static: 0
+G4WT17 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT17 > ============================================================
+G4WT17 > G4Allocator objects are deleted.
+G4WT17 > Thread-local UImanager is to be deleted.
+G4WT17 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT30 > Number of memory pools allocated: 11; of which, static: 0
+G4WT30 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT30 > ============================================================
+G4WT30 > G4Allocator objects are deleted.
+G4WT30 > Thread-local UImanager is to be deleted.
+G4WT30 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT22 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+RunManager is deleted.
+G4WT5 > Number of memory pools allocated: 11; of which, static: 0
+G4WT24 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT24 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT24 > Pool ID '17G4ReactionProduct', size : 0.0144 MB
+RunManager is deleted.
+G4WT24 > Pool ID '10G4Fragment', size : 0.00673 MB
+G4WT24 > Number of memory pools allocated: 11; of which, static: 0
+G4WT24 > Dynamic pools deleted: 11 / Total memory freed: 0.19 MB
+G4WT24 > ============================================================
+G4WT24 > G4Allocator objects are deleted.
+G4WT24 > Thread-local UImanager is to be deleted.
+G4WT24 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT1 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
 G4WT1 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
-G4WT1 > Pool ID '10G4Fragment', size : 0.00192 MB
-G4WT1 > Pool ID '17G4ReactionProduct', size : 0.00192 MB
+G4WT1 > Pool ID '10G4Fragment', size : 0.00673 MB
+G4WT1 > Pool ID '17G4ReactionProduct', size : 0.0144 MB
 G4WT1 > Number of memory pools allocated: 11; of which, static: 0
-G4WT1 > Dynamic pools deleted: 11 / Total memory freed: 0.16 MB
+G4WT1 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
 G4WT1 > ============================================================
 G4WT1 > G4Allocator objects are deleted.
 G4WT1 > Thread-local UImanager is to be deleted.
 G4WT1 > There should not be any thread-local G4cout/G4cerr hereafter.
-UImanager deleted.
-StateManager deleted.
-RunManagerKernel is deleted. Good bye :)
+RunManager is deleted.
+G4WT8 > Pool ID '17G4DynamicParticle', size : 0.0202 MB
+G4WT0 > Pool ID '7G4Track', size : 0.0365 MB
+G4WT8 > Pool ID '7G4Track', size : 0.0404 MB
+G4WT0 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
+G4WT15 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT15 > Number of memory pools allocated: 11; of which, static: 0
+G4WT15 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT15 > ============================================================
+G4WT15 > G4Allocator objects are deleted.
+G4WT23 > Pool ID '17G4DynamicParticle', size : 0.0221 MB
+RunManager is deleted.
+G4WT16 > Pool ID '7G4Track', size : 0.0433 MB
+G4WT27 > Pool ID '10G4Fragment', size : 0.00673 MB
+G4WT27 > Number of memory pools allocated: 11; of which, static: 0
+G4WT27 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT27 > ============================================================
+G4WT27 > G4Allocator objects are deleted.
+G4WT27 > Thread-local UImanager is to be deleted.
+G4WT27 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT22 > Pool ID '17G4ReactionProduct', size : 0.0135 MB
+G4WT5 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT5 > ============================================================
+G4WT5 > G4Allocator objects are deleted.
+G4WT5 > Thread-local UImanager is to be deleted.
+G4WT5 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT12 > Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
+RunManager is deleted.
+G4WT2 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT0 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT0 > Pool ID '17G4ReactionProduct', size : 0.0115 MB
+G4WT0 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT0 > Number of memory pools allocated: 11; of which, static: 0
+G4WT0 > Dynamic pools deleted: 11 / Total memory freed: 0.16 MB
+G4WT0 > ============================================================
+G4WT0 > G4Allocator objects are deleted.
+RunManager is deleted.
+G4WT0 > Thread-local UImanager is to be deleted.
+G4WT0 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT12 > Pool ID '7G4Event', size : 0.000961 MB
+G4WT2 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT2 > Pool ID '17G4ReactionProduct', size : 0.0144 MB
+G4WT8 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT28 > Pool ID '7G4Track', size : 0.0519 MB
+G4WT22 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT15 > Thread-local UImanager is to be deleted.
+G4WT15 > There should not be any thread-local G4cout/G4cerr hereafter.
+RunManager is deleted.
+G4WT23 > Pool ID '7G4Track', size : 0.0442 MB
+G4WT16 > Pool ID '18G4TouchableHistory', size : 0.00577 MB
+G4WT23 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT9 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT2 > Pool ID '10G4Fragment', size : 0.00577 MB
+RunManager is deleted.
+G4WT2 > Number of memory pools allocated: 11; of which, static: 0
+G4WT2 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT2 > ============================================================
+G4WT2 > G4Allocator objects are deleted.
+G4WT2 > Thread-local UImanager is to be deleted.
+G4WT2 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT23 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT9 > Number of memory pools allocated: 11; of which, static: 0
+G4WT8 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT22 > Number of memory pools allocated: 11; of which, static: 0
+G4WT22 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT22 > ============================================================
+RunManager is deleted.G4WT22 > G4Allocator objects are deleted.
+
+G4WT22 > Thread-local UImanager is to be deleted.
+G4WT22 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT9 > Dynamic pools deleted: 11 / Total memory freed: 0.18 MB
+G4WT9 > ============================================================
+G4WT9 > G4Allocator objects are deleted.
+G4WT9 > Thread-local UImanager is to be deleted.
+G4WT9 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT12 > Pool ID '15G4PrimaryVertex', size : 0.000961 MB
+G4WT12 > Pool ID '17G4PrimaryParticle', size : 0.000961 MB
+G4WT12 > Pool ID '17G4DynamicParticle', size : 0.0221 MB
+G4WT21 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT28 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT16 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT16 > Pool ID '17G4ReactionProduct', size : 0.0115 MB
+G4WT16 > Pool ID '10G4Fragment', size : 0.00673 MB
+G4WT16 > Number of memory pools allocated: 11; of which, static: 0
+RunManager is deleted.G4WT16 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT16 > ============================================================
+G4WT16 > G4Allocator objects are deleted.
+RunManager is deleted.
+G4WT16 > Thread-local UImanager is to be deleted.
+G4WT16 > There should not be any thread-local G4cout/G4cerr hereafter.
+
+G4WT21 > Pool ID '17G4ReactionProduct', size : 0.0125 MB
+G4WT28 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT28 > Pool ID '17G4ReactionProduct', size : 0.0173 MB
+G4WT28 > Pool ID '10G4Fragment', size : 0.00769 MB
+G4WT28 > Number of memory pools allocated: 11; of which, static: 0
+G4WT21 > Pool ID '10G4Fragment', size : 0.00577 MB
+RunManager is deleted.
+G4WT21 > Number of memory pools allocated: 11; of which, static: 0
+G4WT8 > Pool ID '17G4ReactionProduct', size : 0.0125 MB
+G4WT12 > Pool ID '7G4Track', size : 0.0442 MB
+G4WT28 > Dynamic pools deleted: 11 / Total memory freed: 0.2 MB
+G4WT28 > ============================================================
+G4WT28 > G4Allocator objects are deleted.
+G4WT28 > Thread-local UImanager is to be deleted.
+G4WT28 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT23 > Pool ID '17G4ReactionProduct', size : 0.0154 MB
+G4WT21 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT23 > Pool ID '10G4Fragment', size : 0.00577 MB
+G4WT12 > Pool ID '18G4TouchableHistory', size : 0.00673 MB
+G4WT21 > ============================================================
+G4WT21 > G4Allocator objects are deleted.
+G4WT21 > Thread-local UImanager is to be deleted.
+G4WT21 > There should not be any thread-local G4cout/G4cerr hereafter.
+RunManager is deleted.G4WT8 > Pool ID '10G4Fragment', size : 0.00577 MB
+
+G4WT23 > Number of memory pools allocated: 11; of which, static: 0
+G4WT12 > Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
+G4WT8 > Number of memory pools allocated: 11; of which, static: 0
+G4WT23 > Dynamic pools deleted: 11 / Total memory freed: 0.19 MB
+G4WT23 > ============================================================
+G4WT8 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT8 > ============================================================
+G4WT8 > G4Allocator objects are deleted.
+G4WT8 > Thread-local UImanager is to be deleted.
+G4WT8 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT12 > Pool ID '17G4ReactionProduct', size : 0.00961 MB
+RunManager is deleted.
+G4WT23 > G4Allocator objects are deleted.
+G4WT23 > Thread-local UImanager is to be deleted.
+G4WT23 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT12 > Pool ID '10G4Fragment', size : 0.00481 MB
+G4WT12 > Number of memory pools allocated: 11; of which, static: 0
+G4WT12 > Dynamic pools deleted: 11 / Total memory freed: 0.17 MB
+G4WT12 > ============================================================
+G4WT12 > G4Allocator objects are deleted.
+G4WT12 > Thread-local UImanager is to be deleted.
+G4WT12 > There should not be any thread-local G4cout/G4cerr hereafter.
+RunManager is deleted.
+RunManager is deleted.
 RunManager is deleted.
 G4 kernel has come to Quit state.
-Deleting G4Run (id:0) 
-UserDetectorConstruction deleted 0x5ff8b960e7a0
-UserPhysicsList deleted 0x5ff8b960e7f0
-UserActionInitialization deleted 0x5ff8b97c9100
-UserWorkerInitialization deleted 0
-UserWorkerThreadInitialization deleted 0x5ff8be66c4b0
+UserDetectorConstruction deleted.
+UserPhysicsList deleted.
+UserActionInitialization deleted.
+UserWorkerInitialization deleted.
+UserWorkerThreadInitialization deleted.
 UserRunAction deleted.
 UserPrimaryGenerator deleted.
 RunManager is deleting RunManagerKernel.
@@ -1035,15 +3244,15 @@ G4SDManager deleted.
 EventManager deleted.
 Units table cleared.
 TransportationManager deleted.
-Total navigation history collections cleaned: 3
 G4RNGHelper object is deleted.
 ================== Deleting memory pools ===================
 Pool ID '20G4NavigationLevelRep', size : 0.00288 MB
 Pool ID '24G4ReferenceCountedHandleIvE', size : 0.000961 MB
-Pool ID '17G4DynamicParticle', size : 0.000961 MB
+Pool ID '16G4SmartVoxelNode', size : 0.00288 MB
+Pool ID '17G4SmartVoxelProxy', size : 0.00192 MB
 Pool ID '15G4CountedObjectIvE', size : 0.000961 MB
-Number of memory pools allocated: 4; of which, static: 0
-Dynamic pools deleted: 4 / Total memory freed: 0.0058 MB
+Number of memory pools allocated: 5; of which, static: 0
+Dynamic pools deleted: 5 / Total memory freed: 0.0096 MB
 ============================================================
 G4Allocator objects are deleted.
 UImanager deleted.

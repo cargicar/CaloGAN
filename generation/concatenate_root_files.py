@@ -18,6 +18,7 @@ def get_calogan_root_files(folder_path):
     # glob to find all files matching the pattern
     pattern = os.path.join(folder_path, "calogan*")
     calogan_files = glob.glob(pattern)
+    breakpoint()
     return [os.path.basename(f) for f in calogan_files if os.path.isfile(f)]
   except OSError:
     print(f"Error: Invalid folder path - {folder_path}")
@@ -59,7 +60,8 @@ def save_concatenated_root(output_filename, all_data, tree_name="concatenated_tr
     except Exception as e:
         print(f"An error occurred while saving to ROOT file: {e}")
 
-folder = "."
+#folder = "."
+folder = "/global/homes/c/ccardona/G4_MyTestEm3/build"
 file_list = calogan_file_list = get_calogan_root_files(folder)
 
 tree_name = "fancy_tree" 
@@ -75,7 +77,7 @@ all_data = uproot.concatenate(
     library="np"  # Or "pd" for Pandas DataFrame, "ak" for Awkward Array
 )
 
-save_concatenated_root("calogan_concat_nparticles_1000.root", all_data, tree_name="fancy_tree")
+save_concatenated_root("global/homes/c/ccardona/datasets_G4generated/calogan_interactive_concat_run01.root", all_data, tree_name="fancy_tree")
 
 # Access your data like:
 # if library="np":
